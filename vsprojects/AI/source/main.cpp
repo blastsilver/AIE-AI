@@ -1,7 +1,10 @@
 #include <cmath>
 #include <ctime>
 #include <ccon.h>
+#include <iostream>
 #include <Windows.h>
+#include "draw.h"
+#include "util.h"
 
 //https://en.wikipedia.org/wiki/HSL_and_HSV
 //https://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion
@@ -100,6 +103,17 @@ void drawLine(Color & color1, Color & color2, int line)
 
 void main()
 {
+    float buffer1[10] = { 0, 1, 2, 3, 4, 4, 4, 4, 4, 4 };
+    float buffer2[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+    util::Collection<float> collection1(buffer1, 10);
+    util::Collection<float> collection2(buffer2, 10);
+    
+
+
+
+    if (!collection1.remove(collection2)) std::cout << "failed to remove collection!\n";
+
     ccon::cconInit();
     ccon::cconSize(APP_WIDTH, APP_HEIGHT);
     ccon::cconViewport(0, 0, APP_WIDTH, APP_HEIGHT);
