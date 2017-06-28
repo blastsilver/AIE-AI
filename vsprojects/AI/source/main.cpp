@@ -103,16 +103,20 @@ void drawLine(Color & color1, Color & color2, int line)
 
 void main()
 {
-    float buffer1[10] = { 0, 1, 2, 3, 4, 4, 4, 4, 4, 4 };
-    float buffer2[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    float buffer1[6] = { 0.0f, 0.2f, 0.4f, 0.6f, 0.8f, 1.0f };
+    float buffer2[6] = { 0.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f };
 
-    util::Collection<float> collection1(buffer1, 10);
-    util::Collection<float> collection2(buffer2, 10);
+    util::Collection<float> collection1(buffer1, sizeof(buffer1) / sizeof(float));
+    util::Collection<float> collection2(buffer2, sizeof(buffer2) / sizeof(float));
     
+    //collection2.remove(0);
+    //collection2.remove(5);
+    //collection2.remove(1);
+    //collection2.remove(4);
+    //collection2.remove(2);
+    //collection2.remove(3);
 
-
-
-    if (!collection1.remove(collection2)) std::cout << "failed to remove collection!\n";
+    if (!collection2.remove(collection1)) std::cout << "failed to remove collection!\n";
 
     ccon::cconInit();
     ccon::cconSize(APP_WIDTH, APP_HEIGHT);
