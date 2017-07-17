@@ -5,63 +5,10 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Source Files\draw">
-      <UniqueIdentifier>{0551ef94-079c-4fca-b37b-a80f670d5d99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\draw\shaders">
-      <UniqueIdentifier>{d66897ae-c123-4926-9748-df48866d3dc5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\draw\buffers">
-      <UniqueIdentifier>{d97902ad-0ad7-483b-8cb1-8e8c6eeb3ef6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\draw\core">
-      <UniqueIdentifier>{b838ad23-1781-45ad-845a-1be4eb227279}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\util">
-      <UniqueIdentifier>{47f70930-9f5c-4c04-9e09-4faf2471b13b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\util\iterators">
-      <UniqueIdentifier>{802a6bae-f229-4a21-b0ec-04c13cf1d5ce}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\draw-uniforms.cpp">
-      <Filter>Source Files\draw\shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="source\draw-shaders.cpp">
-      <Filter>Source Files\draw\shaders</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="source\draw.h">
-      <Filter>Source Files\draw</Filter>
-    </ClInclude>
-    <ClInclude Include="source\draw-setup.h">
-      <Filter>Source Files\draw</Filter>
-    </ClInclude>
-    <ClInclude Include="source\draw-uniforms.h">
-      <Filter>Source Files\draw\shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="source\draw-shaders.h">
-      <Filter>Source Files\draw\shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="source\draw-core.h">
-      <Filter>Source Files\draw</Filter>
-    </ClInclude>
-    <ClInclude Include="source\util-iterator.h">
-      <Filter>Source Files\util\iterators</Filter>
-    </ClInclude>
-    <ClInclude Include="source\util-comparable.h">
-      <Filter>Source Files\util\iterators</Filter>
-    </ClInclude>
-    <ClInclude Include="source\util-collection.h">
-      <Filter>Source Files\util\iterators</Filter>
-    </ClInclude>
-    <ClInclude Include="source\util.h">
-      <Filter>Source Files\util\iterators</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
