@@ -42,13 +42,14 @@ void DrawLine(D2D1_POINT_2F start, D2D1_POINT_2F end, int color = 0, int stroke 
 
 using namespace ccon;
 struct DRAWColour { float r, g, b; };
-struct DRAWVector { float x, y, z; };
+struct DRAWVectori { int x, y, z; };
+struct DRAWVectorf { float x, y, z; };
 struct DRAWLink2 {
-    DRAWVector v1, v2;
+    DRAWVectorf v1, v2;
     DRAWColour c1, c2;
 };
 struct DRAWLink3 {
-    DRAWVector v1, v2, v3;
+    DRAWVectorf v1, v2, v3;
     DRAWColour c1, c2, c3;
 };
 
@@ -97,18 +98,24 @@ public:
     }
     void render(DRAWLink2 link)
     {
-        // calculate steps
-        DRAWVector dir = Direction(link.v1, link.v2);
-        float steps = std::abs(std::abs(dir.x) > std::abs(dir.y) ? dir.x : dir.y);
-        float delta = 1 / (steps);
-        float count = 0;
-        // iterate through pixels
-        for (int i = 0; i < int(steps); i++)
+        if (link.v1.x != link.v2.x || link.v1.y != link.v2.y)
         {
-            DRAWVector vec = Lerp(link.v1, link.v2, count);
-            DRAWColour col = Lerp(link.c1, link.c2, count);
-            ccon::win32Update(&m_buffer, { col.r, col.g, col.b }, int(vec.x), int(vec.y));
-            count += delta;
+            // calculate steps
+            DRAWVectorf dir = Direction(link.v1, link.v2);
+            int steps = int(std::abs(std::abs(dir.x) > std::abs(dir.y) ? dir.x : dir.y) + 0.5f) * 2;
+            float delta = 1 / float(steps);
+            // iterate through pixels
+            for (int i = 0; i <= steps; i++)
+            {
+                DRAWVectorf vec = Lerp(link.v1, link.v2, (delta) * i);
+                DRAWColour col = Lerp(link.c1, link.c2, (delta) * i);
+                ccon::win32Update(&m_buffer, { col.r, col.g, col.b }, int(vec.x + 0.5f), int(vec.y + 0.5f));
+                render();
+            }
+        }
+        else
+        {
+            ccon::win32Update(&m_buffer, { link.c1.r, link.c1.g, link.c1.b }, int(link.v1.x + 0.5f), int(link.v1.y + 0.5f));
         }
     }
 
@@ -158,56 +165,26 @@ public:
     void FillTriangle(DRAWLink3 & link)
     {
         // calculate steps
-        float steps = std::abs(link.v3.y - link.v1.y);
-        float delta = 1 / (steps);
-        float count = 0;
+        int steps = int(std::abs(link.v3.y - link.v1.y) + 0.5f) * 2;
+        float delta = 1 / float(steps);
         // iterate through pixels
-        for (int i = 0; i <= int(steps); i++)
+        for (int i = 0; i <= steps; i++)
         {
-            DRAWVector v1 = Lerp(link.v1, link.v3, count);
-            DRAWVector v2 = Lerp(link.v2, link.v3, count);
-            DRAWColour c1 = Lerp(link.c1, link.c3, count);
-            DRAWColour c2 = Lerp(link.c2, link.c3, count);
-            v2.x += 0.5f;
-            v2.y += 0.5f;
+            DRAWVectorf v1 = Lerp(link.v1, link.v3, delta*i);
+            DRAWVectorf v2 = Lerp(link.v2, link.v3, delta*i);
+            DRAWColour c1 = Lerp(link.c1, link.c3, delta*i);
+            DRAWColour c2 = Lerp(link.c2, link.c3, delta*i);
             render({ v1, v2, c1, c2 });
-            count += delta;
             render();
-            Sleep(100);
         }
-
-
-        //render({ link.v3, link.v2, link.c3, link.c2 });
-
-        /*float invslope1 = (link.v3.x - link.v1.x) / (link.v3.y - link.v1.y);
-        float invslope2 = (link.v3.x - link.v2.x) / (link.v3.y - link.v2.y);
-
-        float curx1 = link.v3.x;
-        float curx2 = link.v3.x;
-
-        for (float scanlineY = link.v3.y; scanlineY >= link.v1.y; scanlineY--)
-        {
-            render({ {curx1, scanlineY }, {curx2 + 1.0f, scanlineY}, link.c1, link.c2 });
-            curx1 -= invslope1;
-            curx2 -= invslope2;
-        }*/
     }
+
 private:
 
-
-    float Distance(DRAWVector & p1, DRAWVector & p2)
+    float Distance(DRAWVectorf & p1, DRAWVectorf & p2)
     {
-        DRAWVector dir = Direction(p1, p2);
+        DRAWVectorf dir = Direction(p1, p2);
         return sqrtf(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
-    }
-
-    DRAWVector Lerp(DRAWVector & a, DRAWVector & b, float t)
-    {
-        return{
-            a.x + (b.x - a.x) * t,
-            a.y + (b.y - a.y) * t,
-            a.z + (b.z - a.z) * t,
-        };
     }
 
     DRAWColour Lerp(DRAWColour & a, DRAWColour & b, float t)
@@ -219,7 +196,16 @@ private:
         };
     }
 
-    DRAWVector Direction(DRAWVector & p1, DRAWVector & p2)
+    DRAWVectorf Lerp(DRAWVectorf & a, DRAWVectorf & b, float t)
+    {
+        return{
+            a.x + (b.x - a.x) * t,
+            a.y + (b.y - a.y) * t,
+            a.z + (b.z - a.z) * t,
+        };
+    }
+
+    DRAWVectorf Direction(DRAWVectorf & p1, DRAWVectorf & p2)
     {
         return{
             p2.x - p1.x,
@@ -237,12 +223,9 @@ void main()
         short SIZE = 41;
         ConsoleWindow window{ SIZE, SIZE };
 
-        //window.TFlatTriangle({ 1,0 }, { float(SIZE),0 }, { 20,float(SIZE) });
         DRAWColour rgb1 = { 255, 0, 0 };
         DRAWColour rgb2 = { 0, 255, 0 };
         DRAWColour rgb3 = { 0, 0, 255 };
-
-        window.render({ { 40, 0 }, { 20, 20 }, rgb1, rgb2 });
 
         DRAWLink3 face3 = {
             {  1, 1 },
@@ -251,12 +234,7 @@ void main()
             rgb1, rgb2, rgb3
         };
 
-       // window.FillTriangle(face3);
-
-        /*for (short i = 0; i < SIZE; i++)
-        {
-            window.render({ { 0, float(i) }, { float(SIZE - i), float(i) }, rgb1, rgb2 });
-        }*/
+        window.FillTriangle(face3);
 
         window.render();
 
