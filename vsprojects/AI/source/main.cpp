@@ -6,7 +6,7 @@
 ////https://stackoverflow.com/questions/3018313/algorithm-to-convert-rgb-to-hsv-and-hsv-to-rgb-in-range-0-255-for-both
 ////https://www.google.com.au/search?q=c%2B%2B+interpolate+between+2+colours&oq=c%2B%2B+interpolate+between+2+colours&gs_l=serp.3...105210.116945.0.117081.41.37.3.0.0.0.297.4753.0j19j6.25.0....0...1.1.64.serp..13.24.3997...0j0i67k1j0i10i67k1j0i131k1j0i10k1j0i22i30k1j33i160k1j33i21k1j30i10k1.lpcVdyxoNQs
 
-#include <ccon3.h>
+#include "draw.h"
 #include <ctime>
 #include <math.h>
 #include <iostream>
@@ -78,8 +78,8 @@ public:
                 DRAWVectorf vec = Lerp(link.v1, link.v2, (delta) * i);
                 DRAWColour col = Lerp(link.c1, link.c2, (delta) * i);
                 ccon::win32Update(&m_buffer, { col.r, col.g, col.b }, int(vec.x + 0.5f), int(vec.y + 0.5f));
-                render();
-                Sleep(10);
+                //render();
+                //Sleep(10);
             }
         }
         else
@@ -88,22 +88,25 @@ public:
         }
     }
 
-    void FillTriangle(DRAWLink3 & link)
+    //void FillTriangle(DRAWLink3 & link)
+    //{
+    //    // calculate steps
+    //    int steps = int(std::abs(link.v3.y - link.v1.y) + 0.5f * 2);
+    //    float delta = 1 / float(steps);
+    //    // iterate through pixels
+    //    for (int i = 0; i <= steps; i++)
+    //    {
+    //        DRAWVectorf v1 = Lerp(link.v1, link.v3, delta*i);
+    //        DRAWVectorf v2 = Lerp(link.v2, link.v3, delta*i);
+    //        DRAWColour c1 = Lerp(link.c1, link.c3, delta*i);
+    //        DRAWColour c2 = Lerp(link.c2, link.c3, delta*i);
+    //        render({ v1, v2, c1, c2 });
+    //    }
+    //}
+    void FillTriangle(draw::DRAWShape3 & shape)
     {
-        // calculate steps
-        int steps = int(std::abs(link.v3.y - link.v1.y) + 0.5f * 2);
-        float delta = 1 / float(steps);
-        // iterate through pixels
-        for (int i = 0; i <= steps; i++)
-        {
-            DRAWVectorf v1 = Lerp(link.v1, link.v3, delta*i);
-            DRAWVectorf v2 = Lerp(link.v2, link.v3, delta*i);
-            DRAWColour c1 = Lerp(link.c1, link.c3, delta*i);
-            DRAWColour c2 = Lerp(link.c2, link.c3, delta*i);
-            render({ v1, v2, c1, c2 });
-        }
+        draw::drawRenderShape(m_buffer, shape);
     }
-
 private:
 
     float Distance(DRAWVectorf & p1, DRAWVectorf & p2)
@@ -145,50 +148,27 @@ void main()
         short SIZE = 81;
         ConsoleWindow window{ SIZE, SIZE };
 
-        DRAWColour rgb1 = { 255, 0, 0 };
-        DRAWColour rgb2 = { 0, 255, 0 };
-        DRAWColour rgb3 = { 0, 0, 255 };
+        draw::vec4 rgb1 = { 255, 0, 0 };
+        draw::vec4 rgb2 = { 0, 255, 0 };
+        draw::vec4 rgb3 = { 0, 0, 255 };
 
         float size1 = float(SIZE);
         float size2 = float(SIZE) / 2;
         float size4 = float(SIZE) / 4;
 
-        // TL
-        DRAWLink3 triangle1 = {
-            {  1, 1 },
-            { 39, 1 },
-            { 20, 39 },
-            rgb1, rgb2, rgb3
+
+        draw::DRAWShape3 triangle = {
+            { { 1 + 40, 39 + 40 }, rgb1 },
+            { { 39 + 40, 39 + 40 }, rgb2 },
+            { { 20 + 40,  1 + 40 }, rgb3 },
         };
 
-        // TR
-        DRAWLink3 triangle2 = {
-            { size1 - 2, 1 },
-            { size1 - 2, size2 - 2 },
-            { size2 + 1, size4 - 2 },
-            rgb1, rgb2, rgb3
-        };
+        window.FillTriangle(triangle);
+        //window.FillTriangle(triangle2);
+        //window.FillTriangle(triangle3);
+        //window.FillTriangle(triangle4);
 
-        // BL
-        DRAWLink3 triangle3 = {
-            { 1, size1-2 },
-            { size2 - 1, size1 - size4 },
-            { 1, size2+1 },
-            rgb1, rgb2, rgb3
-        };
-
-        // BR
-        DRAWLink3 triangle4 = {
-            {  1 + 40, 39 + 40 },
-            { 39 + 40, 39 + 40 },
-            { 20 + 40,  1 + 40 },
-            rgb1, rgb2, rgb3
-        };
-
-        window.FillTriangle(triangle1);
-        window.FillTriangle(triangle2);
-        window.FillTriangle(triangle3);
-        window.FillTriangle(triangle4);
+        //draw::drawRenderShape(m_buffer)
 
         window.render();
 
