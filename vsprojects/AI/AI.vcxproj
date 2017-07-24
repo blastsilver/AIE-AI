@@ -19,12 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\draw\core\type-buffer.cpp" />
+    <ClCompile Include="source\draw\core\type-shader.cpp" />
+    <ClCompile Include="source\draw\type-graphics.cpp" />
     <ClCompile Include="source\main.cpp" />
-    <ClCompile Include="source\type-algorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\draw.h" />
-    <ClInclude Include="source\type-algorithm.h" />
+    <ClInclude Include="source\draw\core\detail.h" />
+    <ClInclude Include="source\draw\core\type-buffer.h" />
+    <ClInclude Include="source\draw\core\type-shader.h" />
+    <ClInclude Include="source\draw\detail.h" />
+    <ClInclude Include="source\draw\include.h" />
+    <ClInclude Include="source\draw\type-graphics.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{498DD418-5F64-4242-83E6-0DE973E10BE8}</ProjectGuid>

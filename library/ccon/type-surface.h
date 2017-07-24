@@ -4,15 +4,19 @@
 
 	namespace ccon
 	{
-		struct WIN32StyleInfo
+		struct CCONSurfaceInfo
 		{
-			int32 data;
+			short x;
+			short y;
+			short w;
+			short h;
 		};
-		CCON_DEFINE_HANDLE(WIN32Style);
+		CCON_DEFINE_HANDLE(CCONSurface);
 
-		void win32Delete(WIN32Style * object);
-		CCONResult win32Update(WIN32Style * object, int index);
-		CCONResult win32Create(WIN32StyleInfo * info, WIN32Style * object, int index);
+		CCONResult cconDelete(CCONSurface * object);
+		CCONResult cconUpdate(CCONSurface * object);
+		CCONResult cconUpdate(CCONSurface * object, const CCONPixel & data);
+		CCONResult cconCreate(CCONSurfaceInfo * info, CCONSurface * object);
 	}
 
 /**************************************************************************************************/

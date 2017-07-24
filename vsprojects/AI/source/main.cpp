@@ -6,11 +6,11 @@
 ////https://stackoverflow.com/questions/3018313/algorithm-to-convert-rgb-to-hsv-and-hsv-to-rgb-in-range-0-255-for-both
 ////https://www.google.com.au/search?q=c%2B%2B+interpolate+between+2+colours&oq=c%2B%2B+interpolate+between+2+colours&gs_l=serp.3...105210.116945.0.117081.41.37.3.0.0.0.297.4753.0j19j6.25.0....0...1.1.64.serp..13.24.3997...0j0i67k1j0i10i67k1j0i131k1j0i10k1j0i22i30k1j33i160k1j33i21k1j30i10k1.lpcVdyxoNQs
 
-#include "draw.h"
 #include <ctime>
 #include <math.h>
 #include <iostream>
 #include <Windows.h>
+#include "ccon3.h"
 
 using namespace ccon;
 struct DRAWColour { float r, g, b; };
@@ -27,67 +27,59 @@ struct DRAWLink3 {
 
 class ConsoleWindow
 {
-    ccon::WIN32Buffer m_buffer;
-    ccon::WIN32Window m_oldWindow;
-    ccon::WIN32Window m_newWindow;
+    ccon::CCONWindow m_oldWindow;
+    ccon::CCONWindow m_newWindow;
 public:
+    ccon::CCONSurface m_surface;
     ConsoleWindow(short width, short height)
     {
         // get defaults
-        ccon::win32Create(CCON_NULL, &m_oldWindow);
+        ccon::cconCreate(CCON_NULL, &m_oldWindow);
         // create window
-        ccon::WIN32WindowInfo info = {
-            { 8, 8, FF_DONTCARE, FW_NORMAL, "Terminal" },
-            { ENABLE_MOUSE_INPUT | ENABLE_EXTENDED_FLAGS },
-            { NULL },
-            { WS_CAPTION | WS_SYSMENU | WS_VISIBLE },
-            { width, height },
-            { FALSE, 1 },
-        };
-        ccon::win32Create(&info, &m_newWindow);
-        // create buffers
-        ccon::WIN32BufferInfo bInfo = { 0, 0, short(width), short(height) };
-        ccon::win32Create(&bInfo, &m_buffer, GetStdHandle(STD_OUTPUT_HANDLE));
+        ccon::CCONWindowInfo info = { width, height };
+        ccon::cconCreate(&info, &m_newWindow);
+        // create surface
+        ccon::CCONSurfaceInfo bInfo = { 0, 0, width, height };
+        ccon::cconCreate(&bInfo, &m_surface);
     }
     ~ConsoleWindow()
     {
         // set defaults
-        ccon::win32Update(&m_oldWindow);
+        ccon::cconUpdate(&m_oldWindow);
         // delete handles
-        ccon::win32Delete(&m_buffer);
-        ccon::win32Delete(&m_oldWindow);
-        ccon::win32Delete(&m_newWindow);
+        ccon::cconDelete(&m_surface);
+        ccon::cconDelete(&m_oldWindow);
+        ccon::cconDelete(&m_newWindow);
     }
     void render()
     {
         // draw buffer
-        ccon::win32Update(&m_buffer, GetStdHandle(STD_OUTPUT_HANDLE));
+        ccon::cconUpdate(&m_surface);
     }
-    void render(DRAWLink2 link)
-    {
-        if (link.v1.x != link.v2.x || link.v1.y != link.v2.y)
-        {
-            // calculate steps
-            DRAWVectorf dir = Direction(link.v1, link.v2);
-            int steps = int(std::abs(std::abs(dir.x) > std::abs(dir.y) ? dir.x : dir.y) + 0.5f * 2);
-            float delta = 1 / float(steps);
-            // iterate through pixels
-            if (steps == 0) return;
-            for (int i = 0; i <= steps; i++)
-            {
-                DRAWVectorf vec = Lerp(link.v1, link.v2, (delta) * i);
-                DRAWColour col = Lerp(link.c1, link.c2, (delta) * i);
-                ccon::win32Update(&m_buffer, { col.r, col.g, col.b }, int(vec.x + 0.5f), int(vec.y + 0.5f));
-                //render();
-                //Sleep(10);
-            }
-        }
-        else
-        {
-            ccon::win32Update(&m_buffer, { link.c1.r, link.c1.g, link.c1.b }, int(link.v1.x), int(link.v1.y));
-        }
-    }
-
+    //void render(DRAWLink2 link)
+    //{
+    //    if (link.v1.x != link.v2.x || link.v1.y != link.v2.y)
+    //    {
+    //        // calculate steps
+    //        DRAWVectorf dir = Direction(link.v1, link.v2);
+    //        int steps = int(std::abs(std::abs(dir.x) > std::abs(dir.y) ? dir.x : dir.y) + 0.5f * 2);
+    //        float delta = 1 / float(steps);
+    //        // iterate through pixels
+    //        if (steps == 0) return;
+    //        for (int i = 0; i <= steps; i++)
+    //        {
+    //            DRAWVectorf vec = Lerp(link.v1, link.v2, (delta) * i);
+    //            DRAWColour col = Lerp(link.c1, link.c2, (delta) * i);
+    //            ccon::cconUpdate(&m_surface, { int(vec.x + 0.5f), int(vec.y + 0.5f), col.r, col.g, col.b });
+    //            //render();
+    //            //Sleep(10);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        ccon::cconUpdate(&m_surface, { int(link.v1.x), int(link.v1.y), link.c1.r, link.c1.g, link.c1.b });
+    //    }
+    //}
     //void FillTriangle(DRAWLink3 & link)
     //{
     //    // calculate steps
@@ -103,10 +95,10 @@ public:
     //        render({ v1, v2, c1, c2 });
     //    }
     //}
-    void FillTriangle(draw::DRAWShape3 & shape)
-    {
-        draw::drawRenderShape(m_buffer, shape);
-    }
+    //void FillTriangle(draw::DRAWShape3 & shape)
+    //{
+    //    draw::drawRenderShape(m_buffer, shape);
+    //}
 private:
 
     float Distance(DRAWVectorf & p1, DRAWVectorf & p2)
@@ -148,22 +140,22 @@ void main()
         short SIZE = 81;
         ConsoleWindow window{ SIZE, SIZE };
 
-        draw::vec4 rgb1 = { 255, 0, 0 };
-        draw::vec4 rgb2 = { 0, 255, 0 };
-        draw::vec4 rgb3 = { 0, 0, 255 };
+        //draw::vec4 rgb1 = { 255, 0, 0 };
+        //draw::vec4 rgb2 = { 0, 255, 0 };
+        //draw::vec4 rgb3 = { 0, 0, 255 };
 
-        float size1 = float(SIZE);
-        float size2 = float(SIZE) / 2;
-        float size4 = float(SIZE) / 4;
+        //float size1 = float(SIZE);
+        //float size2 = float(SIZE) / 2;
+        //float size4 = float(SIZE) / 4;
 
 
-        draw::DRAWShape3 triangle = {
-            { { 1 + 40, 39 + 40 }, rgb1 },
-            { { 39 + 40, 39 + 40 }, rgb2 },
-            { { 20 + 40,  1 + 40 }, rgb3 },
-        };
+        //draw::DRAWShape3 triangle = {
+        //    { { 1 + 40, 39 + 40 }, rgb1 },
+        //    { { 39 + 40, 39 + 40 }, rgb2 },
+        //    { { 20 + 40,  1 + 40 }, rgb3 },
+        //};
 
-        window.FillTriangle(triangle);
+        //window.FillTriangle(triangle);
         //window.FillTriangle(triangle2);
         //window.FillTriangle(triangle3);
         //window.FillTriangle(triangle4);
