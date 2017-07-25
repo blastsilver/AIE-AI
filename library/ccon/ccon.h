@@ -34,12 +34,6 @@
 			CCON_FAILURE,
 		};
 
-		// constant enums
-		enum CCONEnum
-		{
-
-		};
-
 		// basic structures
 		struct CCONPixel { float x, y, r, g, b; };
 	}

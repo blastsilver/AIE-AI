@@ -12,39 +12,52 @@ draw::vec4 rotateZ(const draw::vec4 & point, float angle)
     };
 }
 
+draw::vec4 translateXY(const draw::vec4 & point, float x, float y)
+{
+	return{
+		point.x + x,
+		point.y + y,
+		point.z,
+		point.w,
+	};
+}
+
 void main()
 {
     draw::Graphics graphics(81, 81);
 
     draw::vec4 points[4] = {
-        { -0.5f, -0.5f },
-        {  0.5f, -0.5f },
-        {  0.5f,  0.5f },
-        { -0.5f,  0.5f },
+        { -0.25f, -0.25f },
+        {  0.25f, -0.25f },
+        {  0.25f,  0.25f },
+        { -0.25f,  0.25f },
     };
     draw::vec4 calcPoints[4];
 
     float timeCount = 0;
 
-    while (true)
+    while (timeCount < 10)
     {
         graphics.ClearBuffers();
 
         for (int i = 0; i < 4; i++)
         {
-            calcPoints[i] = rotateZ(points[i], timeCount);
+            //calcPoints[i] = rotateZ(translateXY(points[i], sin(timeCount), cos(timeCount)), timeCount);
+			calcPoints[i] = translateXY(rotateZ(points[i], timeCount * 6), sin(timeCount) / 2, cos(timeCount) / 2);
         }
 
         graphics.AddVertex(calcPoints[0].x, calcPoints[0].y);
         graphics.AddVertex(calcPoints[1].x, calcPoints[1].y);
         graphics.AddVertex(calcPoints[3].x, calcPoints[3].y);
 
+		//graphics.DrawBuffers();
+
         graphics.AddVertex(calcPoints[3].x, calcPoints[3].y);
         graphics.AddVertex(calcPoints[1].x, calcPoints[1].y);
         graphics.AddVertex(calcPoints[2].x, calcPoints[2].y);
 
         graphics.DrawBuffers();
-        timeCount += 0.05f;
+        timeCount += 0.01f;
         Sleep(10);
     }
 

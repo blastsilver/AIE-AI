@@ -124,7 +124,6 @@
         };
     }
 
-    //void g_DrawLine(draw::vec4 * point, draw::vec4 * colour)
     void g_DrawLine(draw::vec4 & v1, draw::vec4 & v2, draw::vec4 & c1, draw::vec4 & c2)
     {
         // calculate steps
@@ -224,8 +223,8 @@
     {
         int index = int(point.x + 0.5f) * g_graphics->m_width + int(point.y + 0.5f);
         // culling check
-        if (point.x < 0 || point.x > g_graphics->m_width - 1) return false;
-        if (point.y < 0 || point.y > g_graphics->m_height - 1) return false;
+        if (point.x < 0 || point.x > (g_graphics->m_width - 1)) return false;
+        if (point.y < 0 || point.y > (g_graphics->m_height - 1)) return false;
         // depth buffer check
         if (point.z < 0 || point.z < ((float*)(g_graphics->m_depthBuffer->buffer))[index]) return false;
         // update stencil/depth buffer 
@@ -242,15 +241,15 @@
     draw::Graphics::~Graphics()
     {
         // ccon :: reset console
-        //ccon::cconUpdate(&m_oldWindow);
-        //// ccon :: delete handles
-        //ccon::cconDelete(&m_surface);
-        ////ccon::cconDelete(&m_oldWindow);
-        //ccon::cconDelete(&m_newWindow);
-        //// draw :: delete handles
-        //draw::drawDeleteBuffer(&m_depthBuffer);
-        //draw::drawDeleteBuffer(&m_stencilBuffer);
-        //draw::drawDeleteShader(&m_defaultShader);
+        ccon::cconUpdate(&m_oldWindow);
+        // ccon :: delete handles
+        ccon::cconDelete(&m_surface);
+        //ccon::cconDelete(&m_oldWindow);
+        ccon::cconDelete(&m_newWindow);
+        // draw :: delete handles
+        draw::drawDeleteBuffer(&m_depthBuffer);
+        draw::drawDeleteBuffer(&m_stencilBuffer);
+        draw::drawDeleteShader(&m_defaultShader);
     }
 
     draw::Graphics::Graphics(int width, int height)
@@ -275,7 +274,6 @@
         // draw :: create handles
         draw::DRAWBufferInfo buffInfo1i = { sizeof(int) * 1, width, height };
         draw::DRAWBufferInfo buffInfo1f = { sizeof(float) * 1, width, height };
-        draw::DRAWBufferInfo buffInfo3f = { sizeof(float) * 3, width, height };
         draw::DRAWShaderInfo shaderInfo = { vertCallback00, vertCallback01, fragCallback00, fragCallback01 };
         draw::drawCreateBuffer(&buffInfo1f, &m_depthBuffer);
         draw::drawCreateBuffer(&buffInfo1i, &m_stencilBuffer);
