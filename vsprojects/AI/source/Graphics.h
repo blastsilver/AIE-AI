@@ -1,29 +1,59 @@
 #pragma once
 /** Dependencies **********************************************************************************/
 
-    #include "core\detail.h"
-    /*#include "type-graphics.h"*/
+    #include "draw\include.h"
+    #include "draw\core\type-buffer.h"
+    #include "draw\core\type-shader.h"
 
 /** Declarations **********************************************************************************/
 
     namespace draw
     {
-        struct _DRAWGraphics
+        class Graphics
         {
-            int count;
-            vec4 points[3];
-            DRAWBuffer buffer;
+            // private variables
+            int m_width;
+            int m_height;
+            int m_drawCount;
+            vec4 m_viewport;
+            vec4 m_colour[3];
+            vec4 m_vertex[3];
+            DRAWBuffer m_depthBuffer;
+            DRAWBuffer m_stencilBuffer;
+            DRAWShader m_defaultShader;
+            ccon::CCONWindow m_oldWindow;
+            ccon::CCONWindow m_newWindow;
+            ccon::CCONSurface m_surface;
+        public:
+            // public defaults
+            ~Graphics();
+            Graphics(int width, int height);
+            // public functions [buffers]
+            void DrawBuffers();
+            void ClearBuffers();
+            // public functions [graphics]
+            void AddVertex(float x, float y);
+            void AddColour(float r, float g, float b) {};
+            void AddVertex(float x, float y, float z);
+            void AddColour(float r, float g, float b, float a) {};
+            void AddVertex(float x, float y, float z, float w);
+        private:
+            // private functions [shaders]
+            friend void vertCallback00(vec4 & point, vec4 & colour);
+            friend bool vertCallback01(vec4 & point, vec4 & colour);
+            friend void fragCallback00(vec4 & point, vec4 & colour);
+            friend bool fragCallback01(vec4 & point, vec4 & colour);
         };
 
-        inline void _AlgorithmDot(DRAWBuffer * cBuffer, DRAWBuffer * zBuffer, const ccon::CCONPixel & data)
-        {
-            // calculate index
-            /*int index = int(data.y + 0.5f) * (*object)->sizeW + int(data.x + 0.5f);
-            ((float*)(*object)->buffer)[index + 0] = data.r;
-            ((float*)(*object)->buffer)[index + 1] = data.g;
-            ((float*)(*object)->buffer)[index + 2] = data.b;*/
-            //((float*)(*object)->buffer)[index + 3] = data.b; // z-buffer
-        }
+        //inline void _AlgorithmDot(DRAWBuffer * cBuffer, DRAWBuffer * zBuffer, const ccon::CCONPixel & data)
+        //{
+        //    // calculate index
+        //    int index = int(data.y + 0.5f) * (*object)->sizeW + int(data.x + 0.5f);
+        //    ((float*)(*object)->buffer)[index + 0] = data.r;
+        //    ((float*)(*object)->buffer)[index + 1] = data.g;
+        //    ((float*)(*object)->buffer)[index + 2] = data.b;
+        //    //((float*)(*object)->buffer)[index + 3] = data.b; // z-buffer
+        //}
         //void render(DRAWLink2 link)
         //{
         //    if (link.v1.x != link.v2.x || link.v1.y != link.v2.y)

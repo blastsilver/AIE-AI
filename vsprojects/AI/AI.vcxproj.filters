@@ -19,7 +19,7 @@
     <ClCompile Include="source\draw\core\type-shader.cpp">
       <Filter>Source Files\draw</Filter>
     </ClCompile>
-    <ClCompile Include="source\draw\type-graphics.cpp">
+    <ClCompile Include="source\Graphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -31,8 +31,8 @@
     <ClInclude Include="source\draw\core\type-shader.h">
       <Filter>Source Files\draw</Filter>
     </ClInclude>
-    <ClInclude Include="source\draw\type-graphics.h" />
     <ClInclude Include="source\draw\detail.h" />
     <ClInclude Include="source\draw\include.h" />
+    <ClInclude Include="source\Graphics.h" />
   </ItemGroup>
 </Project>

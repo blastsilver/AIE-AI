@@ -6,10 +6,10 @@
     {
         struct DRAWShaderInfo
         {
-            void(*vertCallback00)(vec4 &);
-            bool(*vertCallback01)(vec4 &);
-            void(*fragCallback00)(vec4 &);
-            bool(*fragCallback01)(vec4 &);
+            void(*vertCallback00)(vec4 &, vec4 &);
+            bool(*vertCallback01)(vec4 &, vec4 &);
+            void(*fragCallback00)(vec4 &, vec4 &);
+            bool(*fragCallback01)(vec4 &, vec4 &);
         };
 
         CCON_DEFINE_HANDLE(DRAWShader);

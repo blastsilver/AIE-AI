@@ -34,7 +34,7 @@
     ccon::CCONResult draw::drawCreateBuffer(DRAWBufferInfo * info, DRAWBuffer * object)
     {
         // check if null
-        if (info == CCON_NULL)
+        if (info != CCON_NULL)
         {
             // create object
             (*object) = new DRAWBuffer_T{};

@@ -3,8 +3,8 @@
     #include "..\include.h"
     #include "detail.h"
 
-    void _def_Callback00(draw::vec4 & data) { return; }
-    bool _def_Callback01(draw::vec4 & data) { return true; }
+    void _def_Callback00(draw::vec4 & vertex, draw::vec4 & colour) { return; }
+    bool _def_Callback01(draw::vec4 & vertex, draw::vec4 & colour) { return true; }
 
 /** Declarations **********************************************************************************/
 
@@ -19,7 +19,7 @@
     ccon::CCONResult draw::drawCreateShader(DRAWShaderInfo * info, DRAWShader * object)
     {
         // check if null
-        if (info == CCON_NULL)
+        if (info != CCON_NULL)
         {
             // create object
             (*object) = new DRAWShader_T{};
