@@ -223,10 +223,10 @@
     {
         int index = int(point.x + 0.5f) * g_graphics->m_width + int(point.y + 0.5f);
         // culling check
-        if (point.x < 0 || point.x > (g_graphics->m_width - 1)) return false;
-        if (point.y < 0 || point.y > (g_graphics->m_height - 1)) return false;
+        if (point.x < 0.0f || point.x > float(g_graphics->m_width - 1)) return false;
+        if (point.y < 0.0f || point.y > float(g_graphics->m_height - 1)) return false;
         // depth buffer check
-        if (point.z < 0 || point.z < ((float*)(g_graphics->m_depthBuffer->buffer))[index]) return false;
+        if (point.z < 0.0f || point.z < ((float*)(g_graphics->m_depthBuffer->buffer))[index]) return false;
         // update stencil/depth buffer 
         ((int*)(g_graphics->m_stencilBuffer->buffer))[index]++;
         ((float*)(g_graphics->m_depthBuffer->buffer))[index] = point.z;

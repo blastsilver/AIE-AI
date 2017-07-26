@@ -8,6 +8,12 @@
     <Filter Include="Source Files\draw">
       <UniqueIdentifier>{3d0fa6fc-9582-4386-885b-f20a94a9e793}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\AI">
+      <UniqueIdentifier>{b3601a9e-67b0-4b2c-a938-7e6f4246d1c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\draw\maths">
+      <UniqueIdentifier>{dcb76fc7-73b7-4a65-a2f0-2282460b9cf4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -34,5 +40,12 @@
     <ClInclude Include="source\draw\detail.h" />
     <ClInclude Include="source\draw\include.h" />
     <ClInclude Include="source\Graphics.h" />
+    <ClInclude Include="source\NodeTransform.h">
+      <Filter>Source Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\draw\maths\detail.h" />
+    <ClInclude Include="source\draw\maths\type_vec4.h" />
+    <ClInclude Include="source\draw\maths\type-vec2.h" />
+    <ClInclude Include="source\draw\maths\swizzle.h" />
   </ItemGroup>
 </Project>

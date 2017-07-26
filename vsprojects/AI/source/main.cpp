@@ -2,6 +2,18 @@
 #include <Windows.h>
 #include "Graphics.h"
 
+#include "draw\maths\type-vec2.h"
+
+draw::vec4 scale(const draw::vec4 & point, float scalar)
+{
+    return{
+        point.x * scalar,
+        point.y * scalar,
+        point.z,
+        point.w,
+    };
+}
+
 draw::vec4 rotateZ(const draw::vec4 & point, float angle)
 {
     return {
@@ -21,43 +33,65 @@ draw::vec4 translateXY(const draw::vec4 & point, float x, float y)
 		point.w,
 	};
 }
-
 void main()
 {
-    draw::Graphics graphics(81, 81);
+    draw::vec2 v1(1, 2);
+    draw::vec2 v2(2, 1);
+
+    v1.xx = v2.xy;
+    
+
+
+    draw::Graphics graphics(111, 111);
 
     draw::vec4 points[4] = {
-        { -0.25f, -0.25f },
-        {  0.25f, -0.25f },
-        {  0.25f,  0.25f },
-        { -0.25f,  0.25f },
+        { -0.5f, -0.5f },
+        {  0.5f, -0.5f },
+        {  0.5f,  0.5f },
+        { -0.5f,  0.5f },
     };
     draw::vec4 calcPoints[4];
 
-    float timeCount = 0;
-
-    while (timeCount < 10)
+    float time = 0;
+    float gridX = 10;
+    float gridY = 10;
+    float spacing = 2;
+    float scaling = (gridX / (gridX * gridY));
+    float halfGridX = (gridX - 1) / 2;
+    float halfGridY = (gridY - 1) / 2;
+    while (true)
     {
         graphics.ClearBuffers();
 
-        for (int i = 0; i < 4; i++)
+        for (float y = -halfGridY; y <= halfGridY; y++)
         {
-            //calcPoints[i] = rotateZ(translateXY(points[i], sin(timeCount), cos(timeCount)), timeCount);
-			calcPoints[i] = translateXY(rotateZ(points[i], timeCount * 6), sin(timeCount) / 2, cos(timeCount) / 2);
+            for (float x = -halfGridX; x <= halfGridX; x++)
+            {
+
+                for (int i = 0; i < 4; i++)
+                {
+                    //calcPoints[i] = rotateZ(translateXY(points[i], sin(timeCount), cos(timeCount)), timeCount);
+                    //calcPoints[i] = translateXY(rotateZ(points[i], sin(timeCount) * 6), sin(timeCount) / 2, cos(timeCount) / 2);
+                    //calcPoints[i] = rotateZ(points[i], (timeCount) * 6);
+                    //calcPoints[i] = scale(translateXY(points[i], -3.0f, 3.0f), 0.2);
+                    calcPoints[i] = scale(translateXY(rotateZ(points[i], time), x*spacing, y*spacing), scaling);
+                }
+
+                graphics.AddVertex(calcPoints[0].x, calcPoints[0].y);
+                graphics.AddVertex(calcPoints[1].x, calcPoints[1].y);
+                graphics.AddVertex(calcPoints[3].x, calcPoints[3].y);
+
+                //graphics.DrawBuffers();
+
+                graphics.AddVertex(calcPoints[3].x, calcPoints[3].y);
+                graphics.AddVertex(calcPoints[1].x, calcPoints[1].y);
+                graphics.AddVertex(calcPoints[2].x, calcPoints[2].y);
+
+            }
         }
 
-        graphics.AddVertex(calcPoints[0].x, calcPoints[0].y);
-        graphics.AddVertex(calcPoints[1].x, calcPoints[1].y);
-        graphics.AddVertex(calcPoints[3].x, calcPoints[3].y);
-
-		//graphics.DrawBuffers();
-
-        graphics.AddVertex(calcPoints[3].x, calcPoints[3].y);
-        graphics.AddVertex(calcPoints[1].x, calcPoints[1].y);
-        graphics.AddVertex(calcPoints[2].x, calcPoints[2].y);
-
         graphics.DrawBuffers();
-        timeCount += 0.01f;
+        time += 0.1f;
         Sleep(10);
     }
 
