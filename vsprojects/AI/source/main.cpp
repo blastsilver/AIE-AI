@@ -1,102 +1,149 @@
-#include <cmath>
+#include "main.h"
+#include <vector>
 #include <Windows.h>
-#include "Graphics.h"
 
-#include "draw\maths\type-vec2.h"
-
-draw::vec4 scale(const draw::vec4 & point, float scalar)
-{
-    return{
-        point.x * scalar,
-        point.y * scalar,
-        point.z,
-        point.w,
-    };
-}
-
-draw::vec4 rotateZ(const draw::vec4 & point, float angle)
-{
-    return {
-        cosf(angle) * point.x + sin(angle) * point.y,
-        -sinf(angle) * point.x + cos(angle) * point.y,
-        point.z,
-        point.w,
-    };
-}
-
-draw::vec4 translateXY(const draw::vec4 & point, float x, float y)
-{
-	return{
-		point.x + x,
-		point.y + y,
-		point.z,
-		point.w,
-	};
-}
 void main()
 {
-    draw::vec2 v1(1, 2);
-    draw::vec2 v2(2, 1);
+	// window properties
+	const int WIDTH = 111;
+	const int HEIGHT = 111;
+	// node grid properties
+	const int GRID_SIZE_X = 10;
+	const int GRID_SIZE_Y = 10;
+	// node object properties
+	const float NODE_SIZE_X = float(GRID_SIZE_X) / float(GRID_SIZE_X * GRID_SIZE_Y);
+	const float NODE_SIZE_Y = float(GRID_SIZE_Y) / float(GRID_SIZE_X * GRID_SIZE_Y);
 
-    v1.xx = v2.xy;
-    
+	ConsoleCanvas canvas{ WIDTH, HEIGHT };
 
+	std::vector<Node> nodes;
+	fuse::Transform transform;
+	transform.scale.xy = { NODE_SIZE_X, NODE_SIZE_Y };
 
-    draw::Graphics graphics(111, 111);
+	for (int y = 0; y < GRID_SIZE_Y; y++)
+	{
+		for (int x = 0; x < GRID_SIZE_X; x++)
+		{
+			// calculate position
+			transform.position.x = (float(x) - (float(GRID_SIZE_X) / 2.0f)) * NODE_SIZE_X * 2 + NODE_SIZE_X;
+			transform.position.y = (float(y) - (float(GRID_SIZE_Y) / 2.0f)) * NODE_SIZE_Y * 2 + NODE_SIZE_Y;
+			// add node to list
+			nodes.push_back(Node{ transform, true });
+		}
+	}
 
-    draw::vec4 points[4] = {
-        { -0.5f, -0.5f },
-        {  0.5f, -0.5f },
-        {  0.5f,  0.5f },
-        { -0.5f,  0.5f },
-    };
-    draw::vec4 calcPoints[4];
+	nodes[0].isWalkable = false;
 
-    float time = 0;
-    float gridX = 10;
-    float gridY = 10;
-    float spacing = 2;
-    float scaling = (gridX / (gridX * gridY));
-    float halfGridX = (gridX - 1) / 2;
-    float halfGridY = (gridY - 1) / 2;
-    while (true)
-    {
-        graphics.ClearBuffers();
+	while (true)
+	{
+		canvas.clear();
+		
+		// render nodes
+		for (auto node : nodes)
+		{
+			node.Update();
+			node.Render(&canvas);
+		}
 
-        for (float y = -halfGridY; y <= halfGridY; y++)
-        {
-            for (float x = -halfGridX; x <= halfGridX; x++)
-            {
-
-                for (int i = 0; i < 4; i++)
-                {
-                    //calcPoints[i] = rotateZ(translateXY(points[i], sin(timeCount), cos(timeCount)), timeCount);
-                    //calcPoints[i] = translateXY(rotateZ(points[i], sin(timeCount) * 6), sin(timeCount) / 2, cos(timeCount) / 2);
-                    //calcPoints[i] = rotateZ(points[i], (timeCount) * 6);
-                    //calcPoints[i] = scale(translateXY(points[i], -3.0f, 3.0f), 0.2);
-                    calcPoints[i] = scale(translateXY(rotateZ(points[i], time), x*spacing, y*spacing), scaling);
-                }
-
-                graphics.AddVertex(calcPoints[0].x, calcPoints[0].y);
-                graphics.AddVertex(calcPoints[1].x, calcPoints[1].y);
-                graphics.AddVertex(calcPoints[3].x, calcPoints[3].y);
-
-                //graphics.DrawBuffers();
-
-                graphics.AddVertex(calcPoints[3].x, calcPoints[3].y);
-                graphics.AddVertex(calcPoints[1].x, calcPoints[1].y);
-                graphics.AddVertex(calcPoints[2].x, calcPoints[2].y);
-
-            }
-        }
-
-        graphics.DrawBuffers();
-        time += 0.1f;
-        Sleep(10);
-    }
-
-    int zz = 0;
+		canvas.render();
+		int zz = 0;
+	}
 }
+
+//#include <cmath>
+//#include <Windows.h>
+//#include "Graphics.h"
+//
+//#include "fuse\classes.h"
+//
+//draw::vec4 scale(const draw::vec4 & point, float scalar)
+//{
+//    return{
+//        point.x * scalar,
+//        point.y * scalar,
+//        point.z,
+//        point.w,
+//    };
+//}
+//
+//draw::vec4 rotateZ(const draw::vec4 & point, float angle)
+//{
+//    return {
+//        cosf(angle) * point.x + sin(angle) * point.y,
+//        -sinf(angle) * point.x + cos(angle) * point.y,
+//        point.z,
+//        point.w,
+//    };
+//}
+//
+//draw::vec4 translateXY(const draw::vec4 & point, float x, float y)
+//{
+//	return{
+//		point.x + x,
+//		point.y + y,
+//		point.z,
+//		point.w,
+//	};
+//}
+//void main()
+//{
+//	fuse::vec2<float> v1 = { 0, 0 };
+//
+//    draw::Graphics graphics(111, 111);
+//
+//    draw::vec4 points[4] = {
+//        { -0.5f, -0.5f },
+//        {  0.5f, -0.5f },
+//        {  0.5f,  0.5f },
+//        { -0.5f,  0.5f },
+//    };
+//    draw::vec4 calcPoints[4];
+//
+//    float time = 0;
+//    float gridX = 10;
+//    float gridY = 10;
+//    float spacing = 2;
+//    float scaling = (gridX / (gridX * gridY));
+//    float halfGridX = (gridX - 1) / 2;
+//    float halfGridY = (gridY - 1) / 2;
+//    while (true)
+//    {
+//        graphics.ClearBuffers();
+//
+//        for (float y = -halfGridY; y <= halfGridY; y++)
+//        {
+//            for (float x = -halfGridX; x <= halfGridX; x++)
+//            {
+//
+//                for (int i = 0; i < 4; i++)
+//                {
+//                    //calcPoints[i] = rotateZ(translateXY(points[i], sin(timeCount), cos(timeCount)), timeCount);
+//                    //calcPoints[i] = translateXY(rotateZ(points[i], sin(timeCount) * 6), sin(timeCount) / 2, cos(timeCount) / 2);
+//                    //calcPoints[i] = rotateZ(points[i], (timeCount) * 6);
+//                    //calcPoints[i] = scale(translateXY(points[i], -3.0f, 3.0f), 0.2);
+//                    calcPoints[i] = scale(translateXY(rotateZ(points[i], time), x*spacing, y*spacing), scaling);
+//                }
+//
+//                graphics.AddVertex(calcPoints[0].x, calcPoints[0].y);
+//                graphics.AddVertex(calcPoints[1].x, calcPoints[1].y);
+//                graphics.AddVertex(calcPoints[3].x, calcPoints[3].y);
+//
+//                //graphics.DrawBuffers();
+//
+//                graphics.AddVertex(calcPoints[3].x, calcPoints[3].y);
+//                graphics.AddVertex(calcPoints[1].x, calcPoints[1].y);
+//                graphics.AddVertex(calcPoints[2].x, calcPoints[2].y);
+//
+//            }
+//        }
+//
+//        graphics.DrawBuffers();
+//        time += 0.1f;
+//        Sleep(10);
+//    }
+//
+//	int zz = 0;
+//}
 
 
 //////https://qiao.github.io/PathFinding.js/visual/

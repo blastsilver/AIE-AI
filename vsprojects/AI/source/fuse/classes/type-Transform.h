@@ -2,15 +2,15 @@
 /** Dependencies **********************************************************************************/
 /** Declarations **********************************************************************************/
 
-    namespace AStar
-    {
-        class NodeTransform
-        {
-        public:
-            draw::maths::vec4 scale;
-            draw::maths::vec4 position;
-            draw::maths::vec4 rotation;
-        };
-    }
+	namespace fuse
+	{
+		class Transform
+		{
+		public:
+			vec3<float> scale;
+			vec4<float> rotation;
+			vec3<float> position;
+		};
+	}
 
 /**************************************************************************************************/

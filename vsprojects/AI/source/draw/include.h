@@ -2,12 +2,14 @@
 /** Dependencies **********************************************************************************/
     
     #include <ccon3.h>
+	#include "detail.h"
     
 /** Declarations **********************************************************************************/
 
     namespace draw
     {
-        struct vec4 { union { struct { float x, y, z, w; }; struct { float r, g, b, a; }; }; };
+        struct vec4
+		{ union { struct { float x, y, z, w; }; struct { float r, g, b, a; }; }; };
     }
 
 /**************************************************************************************************/

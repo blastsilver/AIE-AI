@@ -13,7 +13,7 @@
 
 		CCONResult cconDelete(CCONWindow * object);
 		CCONResult cconUpdate(CCONWindow * object);
-		CCONResult cconCreate(CCONWindowInfo * info, CCONWindow * object);
+		CCONResult cconCreate(CCONWindow * object, CCONWindowInfo * info);
 	}
 
 /**************************************************************************************************/

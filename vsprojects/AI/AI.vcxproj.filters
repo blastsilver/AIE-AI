@@ -8,44 +8,78 @@
     <Filter Include="Source Files\draw">
       <UniqueIdentifier>{3d0fa6fc-9582-4386-885b-f20a94a9e793}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\AI">
-      <UniqueIdentifier>{b3601a9e-67b0-4b2c-a938-7e6f4246d1c4}</UniqueIdentifier>
+    <Filter Include="Source Files\fuse">
+      <UniqueIdentifier>{4aa74518-e829-4321-b374-ee4c8caaadb5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\draw\maths">
-      <UniqueIdentifier>{dcb76fc7-73b7-4a65-a2f0-2282460b9cf4}</UniqueIdentifier>
+    <Filter Include="Source Files\draw\generation">
+      <UniqueIdentifier>{ab51ae2f-ee34-4cbd-a204-621c9ec29054}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\draw\algorithm">
+      <UniqueIdentifier>{606fce12-2811-484f-9313-d16dc32afa1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\draw\rendering">
+      <UniqueIdentifier>{e705f10c-aecd-4dbd-bb6f-cab53e3a59bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\draw\core\type-buffer.cpp">
-      <Filter>Source Files\draw</Filter>
-    </ClCompile>
-    <ClCompile Include="source\draw\core\type-shader.cpp">
-      <Filter>Source Files\draw</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Graphics.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="source\ConsoleCanvas.cpp">
+      <Filter>Source Files\draw\rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\draw\core\detail.h" />
-    <ClInclude Include="source\draw\core\type-buffer.h">
-      <Filter>Source Files\draw</Filter>
+    <ClInclude Include="source\fuse\classes.h">
+      <Filter>Source Files\fuse</Filter>
     </ClInclude>
-    <ClInclude Include="source\draw\core\type-shader.h">
-      <Filter>Source Files\draw</Filter>
+    <ClInclude Include="source\fuse\classes\include.h">
+      <Filter>Source Files\fuse</Filter>
     </ClInclude>
-    <ClInclude Include="source\draw\detail.h" />
-    <ClInclude Include="source\draw\include.h" />
-    <ClInclude Include="source\Graphics.h" />
-    <ClInclude Include="source\NodeTransform.h">
-      <Filter>Source Files\AI</Filter>
+    <ClInclude Include="source\fuse\classes\maths\include.h">
+      <Filter>Source Files\fuse</Filter>
     </ClInclude>
-    <ClInclude Include="source\draw\maths\detail.h" />
-    <ClInclude Include="source\draw\maths\type_vec4.h" />
-    <ClInclude Include="source\draw\maths\type-vec2.h" />
-    <ClInclude Include="source\draw\maths\swizzle.h" />
+    <ClInclude Include="source\fuse\classes\maths\detail\type-swizzle.h">
+      <Filter>Source Files\fuse</Filter>
+    </ClInclude>
+    <ClInclude Include="source\fuse\classes\maths\detail\type-swizzle-0.h">
+      <Filter>Source Files\fuse</Filter>
+    </ClInclude>
+    <ClInclude Include="source\fuse\classes\maths\detail\type-swizzle-1.h">
+      <Filter>Source Files\fuse</Filter>
+    </ClInclude>
+    <ClInclude Include="source\fuse\classes\maths\detail\type-swizzle-2.h">
+      <Filter>Source Files\fuse</Filter>
+    </ClInclude>
+    <ClInclude Include="source\fuse\classes\type-Transform.h">
+      <Filter>Source Files\fuse</Filter>
+    </ClInclude>
+    <ClInclude Include="source\fuse\classes\maths\vector\type-vec2.h">
+      <Filter>Source Files\fuse</Filter>
+    </ClInclude>
+    <ClInclude Include="source\fuse\classes\maths\vector\type-vec3.h">
+      <Filter>Source Files\fuse</Filter>
+    </ClInclude>
+    <ClInclude Include="source\fuse\classes\maths\vector\type-vec4.h">
+      <Filter>Source Files\fuse</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ConsoleCanvas.h">
+      <Filter>Source Files\draw\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AngorithmAStar.h">
+      <Filter>Source Files\draw\algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Node.h">
+      <Filter>Source Files\draw\generation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\NodeList.h">
+      <Filter>Source Files\draw\generation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\NodeWorld.h">
+      <Filter>Source Files\draw\generation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\main.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

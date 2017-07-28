@@ -13,6 +13,9 @@
 
 	namespace ccon
 	{
+		// type defines
+		typedef void * CCONHANDLE;
+
 		// signed types
 		typedef signed char        byte;
 		typedef signed char        int8;
@@ -27,15 +30,26 @@
 		typedef unsigned long      uint32;
 		typedef unsigned long long uint64;
 
-		// result enums
+		// call results
 		enum CCONResult
 		{
 			CCON_SUCCESS,
 			CCON_FAILURE,
 		};
 
-		// basic structures
-		struct CCONPixel { float x, y, r, g, b; };
+		// shared structures
+		struct CCONRGB
+		{
+			int r;
+			int g;
+			int b;
+		};
+
+		struct CCONCOORD
+		{
+			int x;
+			int y;
+		};
 	}
 
 /**************************************************************************************************/
