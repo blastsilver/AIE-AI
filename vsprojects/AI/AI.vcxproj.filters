@@ -17,7 +17,10 @@
     <Filter Include="Source Files\draw\algorithm">
       <UniqueIdentifier>{606fce12-2811-484f-9313-d16dc32afa1d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\draw\rendering">
+    <Filter Include="Source Files\draw\scripts">
+      <UniqueIdentifier>{f638ff6d-a6dd-4bf2-99a9-018f9396bafe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\draw\graphics">
       <UniqueIdentifier>{e705f10c-aecd-4dbd-bb6f-cab53e3a59bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -26,7 +29,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\ConsoleCanvas.cpp">
-      <Filter>Source Files\draw\rendering</Filter>
+      <Filter>Source Files\draw\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ScriptNodeRemover.cpp">
+      <Filter>Source Files\draw\scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -64,22 +70,22 @@
       <Filter>Source Files\fuse</Filter>
     </ClInclude>
     <ClInclude Include="source\ConsoleCanvas.h">
-      <Filter>Source Files\draw\rendering</Filter>
+      <Filter>Source Files\draw\graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\AngorithmAStar.h">
       <Filter>Source Files\draw\algorithm</Filter>
     </ClInclude>
-    <ClInclude Include="source\Node.h">
-      <Filter>Source Files\draw\generation</Filter>
-    </ClInclude>
-    <ClInclude Include="source\NodeList.h">
-      <Filter>Source Files\draw\generation</Filter>
-    </ClInclude>
-    <ClInclude Include="source\NodeWorld.h">
-      <Filter>Source Files\draw\generation</Filter>
-    </ClInclude>
     <ClInclude Include="source\main.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ScriptNodeRemove.h">
+      <Filter>Source Files\draw\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AINode.h">
+      <Filter>Source Files\draw\generation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AIGrid.h">
+      <Filter>Source Files\draw\generation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

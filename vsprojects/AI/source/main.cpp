@@ -5,20 +5,21 @@
 void main()
 {
 	// window properties
-	const int WIDTH = 111;
-	const int HEIGHT = 111;
+	const int WIDTH = 81;
+	const int HEIGHT = 81;
 	// node grid properties
-	const int GRID_SIZE_X = 10;
-	const int GRID_SIZE_Y = 10;
+	const int GRID_SIZE_X = 5;
+	const int GRID_SIZE_Y = 5;
 	// node object properties
 	const float NODE_SIZE_X = float(GRID_SIZE_X) / float(GRID_SIZE_X * GRID_SIZE_Y);
 	const float NODE_SIZE_Y = float(GRID_SIZE_Y) / float(GRID_SIZE_X * GRID_SIZE_Y);
 
 	ConsoleCanvas canvas{ WIDTH, HEIGHT };
 
-	std::vector<Node> nodes;
+	AI::Grid grid;
 	fuse::Transform transform;
 	transform.scale.xy = { NODE_SIZE_X, NODE_SIZE_Y };
+	ScriptNodeRemover script1(&grid);
 
 	for (int y = 0; y < GRID_SIZE_Y; y++)
 	{
@@ -28,22 +29,21 @@ void main()
 			transform.position.x = (float(x) - (float(GRID_SIZE_X) / 2.0f)) * NODE_SIZE_X * 2 + NODE_SIZE_X;
 			transform.position.y = (float(y) - (float(GRID_SIZE_Y) / 2.0f)) * NODE_SIZE_Y * 2 + NODE_SIZE_Y;
 			// add node to list
-			nodes.push_back(Node{ transform, true });
+			grid.m_list.push_back(Node{ transform, true });
 		}
 	}
-
-	nodes[0].isWalkable = false;
 
 	while (true)
 	{
 		canvas.clear();
 		
-		// render nodes
-		for (auto node : nodes)
-		{
-			node.Update();
-			node.Render(&canvas);
-		}
+		// update node grid
+		grid.Update();
+		// render node grid
+		grid.Render(&canvas);
+
+		script1.Update();
+		script1.Render(&canvas);
 
 		canvas.render();
 		int zz = 0;

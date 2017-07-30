@@ -36,6 +36,7 @@
             union {
                 struct { T x, y, z, w; };
                 struct { T r, g, b, a; };
+				struct { T left, top, right, bottom; };
 				// detail::swizzle to vector2
 				struct { detail::swizzle<2, T, 0, 0, -1, -2> xx; };
 				struct { detail::swizzle<2, T, 0, 1, -1, -2> xy; };
