@@ -10,6 +10,8 @@
     {
         // reset all
         ResetCurrentPath();
+
+		FindPath({ -1,  1 }, { 1, -1 });
     };
 
     void ScriptPathFinding::Update()
@@ -24,11 +26,35 @@
 
     void ScriptPathFinding::Render(ConsoleCanvas * canvas)
     {
+		ConsoleCanvas::Line line;
+		ConsoleCanvas::Text text;
+		line.c1 = { 0, 1, 0, 1 };
+		line.c2 = { 0, 0, 1, 1 };
+		for (auto * i : m_closeList)
+		{
+			if (i->parent != nullptr)
+			{
+				std::string str = std::to_string(i->fCost());
 
+				line.v1.xy = i->position + fuse::vec2<float>{ i->scale.x / 2, i->scale.y / 2 };
+				line.v2.xy = i->parent->position.xy + fuse::vec2<float>{ i->scale.x / 2, i->scale.y / 2 };
+				canvas->render(line);
+				text.v1.xy = i->position + fuse::vec2<float>{ i->scale.x / 2, i->scale.y / 3 };
+				text.c1 = { 1, 0, 0, 1 };
+				text.cstring = (char*)(str.c_str());
+				canvas->render(text);
+			}
+		}
     }
 
     int ScriptPathFinding::GetPathDistance(const AI::Node * a, const AI::Node * b)
     {
+		float dstX = abs(a->position.x - b->position.x);
+		float dstY = abs(a->position.y - b->position.y);
+
+		if (dstX > dstY)
+			return 14 * dstY + 10 * (dstX - dstY);
+		return 14 * dstX + 10 * (dstY - dstX);
     }
 
     void ScriptPathFinding::FindPath(const fuse::vec2<float> & v1, const fuse::vec2<float> & v2)
@@ -60,17 +86,34 @@
                 }
                 // swap values between lists
                 m_closeList.push_back(currentNode);
-                m_openList.erase(m_openList.begin() + count);
+                m_openList.erase(std::find(m_openList.begin(), m_openList.end(), currentNode));
                 // check if finished searching
-                if (currentNode == start) return;
+				if (currentNode == end)
+				{
+					m_pathFound = true;
+					return;
+				}
                 // iterate through current neighbours
                 for (auto * i : m_grid->FetchNeighbours(currentNode))
                 {
                     // check if valid
-                    if (!i->isWalkable || std::find(m_closeList.begin(), m_closeList.end(), i) == m_closeList.end())
+                    if (!i->isWalkable || std::find(m_closeList.begin(), m_closeList.end(), i) != m_closeList.end())
                     {
                         continue;
                     }
+
+					int costToNeighbour = currentNode->gCost() + GetPathDistance(currentNode, i);
+					if (costToNeighbour < i->gCost() || std::find(m_openList.begin(), m_openList.end(), i) == m_openList.end())
+					{
+						i->gCost(costToNeighbour);
+						i->hCost(GetPathDistance(i, end));
+						i->parent = currentNode;
+
+						if (std::find(m_openList.begin(), m_openList.end(), i) == m_openList.end())
+						{
+							m_openList.push_back(i);
+						}
+					}
                 }
             }
         }

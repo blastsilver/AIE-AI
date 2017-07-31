@@ -1,6 +1,7 @@
 #pragma once
 /** Dependencies **********************************************************************************/
 
+#include <ctime>
 	#include "main.h"
 
 /** Declarations **********************************************************************************/
@@ -21,7 +22,7 @@
 	ConsoleCanvas::ConsoleCanvas(int width, int height)
 	{
 		// create
-		m_DBuffer = new float[width * height];
+		m_DBuffer = new float[width * height]{};
 		// [ccon] create
 		ccon::CCONWindowInfo windowInfo{ short(width), short(height) };
 		ccon::CCONSurfaceInfo surfaceInfo{ 0, 0, short(width), short(height) };
@@ -112,7 +113,6 @@
 			fuse::vec4<float> v4 = LERP(data.v1, data.v3, ratio);
 			fuse::vec4<float> c4 = LERP(data.c1, data.c3, ratio);
 			v4.y = data.v2.y;
-			c4.y = data.c2.y;
 			// fill bottom/top flat triangle
 			render({ data.v2, v4, data.v3, data.c2, c4, data.c3 });
 			render({ v4, data.v2, data.v1, c4, data.c2, data.c1 });
@@ -156,7 +156,7 @@
 	{
 		// calculate steps
 		fuse::vec2<float> dir = (data.v2 - data.v1).xy;
-		int steps = int(fmax(abs(dir.x), abs(dir.y)) + 0.5f * 2);
+		int steps = int(fmax(abs(dir.x), abs(dir.y)) + 1.0f);
 		float delta = 1 / float(steps == 0 ? 1 : steps);
 		// iterate through dots
 		for (int i = 0; i <= steps; i++)
@@ -194,7 +194,7 @@
 	void ConsoleCanvas::RASTERIZE(const ConsoleCanvas::Triangle & data)
 	{
 		// calculate steps
-		int steps = int(abs(data.v3.y - data.v1.y) + 0.5f * 2);
+		int steps = int(abs(data.v3.y - data.v1.y) + 1.0f);
 		float delta = 1 / float(steps);
 		// iterate through lines
 		for (int i = 0; i <= steps; i++)
@@ -231,7 +231,7 @@
 		if (x < 0 || x >(m_width - 1)) return false;
 		if (y < 0 || y >(m_height - 1)) return false;
 		// depth buffer check
-		if (z < 0.0f || z > m_DBuffer[index]) return false;
+		if (z < 0.0f || (m_DBuffer[index] != 0 && z > m_DBuffer[index])) return false;
 		// all tests passed successully
 		return true;
 	};
@@ -241,9 +241,9 @@
 		// swap v1-v2
 		TRIANGLE_SORT_BY_Y(&data.v1, &data.c1);
 		// swap v2-v3
-		TRIANGLE_SORT_BY_Y(&data.v2, &data.v2);
+		TRIANGLE_SORT_BY_Y(&data.v2, &data.c2);
 		// swap v1-v2
-		TRIANGLE_SORT_BY_Y(&data.v1, &data.v2);
+		TRIANGLE_SORT_BY_Y(&data.v1, &data.c1);
 	};
 
 	void ConsoleCanvas::TRIANGLE_SORT_BY_Y(fuse::vec4<float> * vec, fuse::vec4<float> * col)

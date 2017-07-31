@@ -38,7 +38,7 @@
       <Filter>Source Files\draw\scripts\generation</Filter>
     </ClCompile>
     <ClCompile Include="source\ScriptPathFinding.cpp">
-      <Filter>Source Files\draw\scripts\generation</Filter>
+      <Filter>Source Files\draw\scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,7 +94,7 @@
       <Filter>Source Files\draw\scripts</Filter>
     </ClInclude>
     <ClInclude Include="source\ScriptPathFinding.h">
-      <Filter>Source Files\draw\scripts\generation</Filter>
+      <Filter>Source Files\draw\scripts</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

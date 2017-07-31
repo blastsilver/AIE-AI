@@ -2,7 +2,9 @@
 /** Dependencies **********************************************************************************/
 
 	// required libraries
+	#include <ctime>
 	#include <vector>
+	#include <string>
     #include <ccon3.h>
 	#include <Windows.h>
 	// required headers

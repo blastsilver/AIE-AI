@@ -85,8 +85,13 @@
         // iterate through node list
         for (auto &i : list)
         {
+			float sizeX = i.scale.x / 2;
+			float sizeY = i.scale.y / 2;
+			float posX = point.x + (point.x > 0 ? -sizeX : sizeX) / 2.0f;
+			float posY = point.y + (point.y > 0 ? -sizeY : sizeY) / 2.0f;
+
             // check collision
-            if (RectCollision({ point.x, point.y, 0.0f, 0.0f }, { i.position.x, i.position.y, m_scale.x, m_scale.y }));
+            if (RectCollision({ posX, posY, sizeX, sizeY }, { i.position, i.scale }))
             {
                 // return address
                 return &i;
@@ -111,6 +116,7 @@
                 if (temp != NULL) neighbours.push_back(temp);
             }
         }
+		return neighbours;
     }
 
     bool AI::Grid::RectCollision(const fuse::vec4<float> & rect1, const fuse::vec4<float> & rect2)
