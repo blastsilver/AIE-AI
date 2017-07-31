@@ -11,17 +11,14 @@
     <Filter Include="Source Files\fuse">
       <UniqueIdentifier>{4aa74518-e829-4321-b374-ee4c8caaadb5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\draw\generation">
-      <UniqueIdentifier>{ab51ae2f-ee34-4cbd-a204-621c9ec29054}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\draw\algorithm">
-      <UniqueIdentifier>{606fce12-2811-484f-9313-d16dc32afa1d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\draw\scripts">
       <UniqueIdentifier>{f638ff6d-a6dd-4bf2-99a9-018f9396bafe}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\draw\graphics">
       <UniqueIdentifier>{e705f10c-aecd-4dbd-bb6f-cab53e3a59bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\draw\scripts\generation">
+      <UniqueIdentifier>{ab51ae2f-ee34-4cbd-a204-621c9ec29054}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -31,8 +28,17 @@
     <ClCompile Include="source\ConsoleCanvas.cpp">
       <Filter>Source Files\draw\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="source\ScriptNodeRemover.cpp">
+    <ClCompile Include="source\ScriptUpdateRect.cpp">
       <Filter>Source Files\draw\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Grid.cpp">
+      <Filter>Source Files\draw\scripts\generation</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Node.cpp">
+      <Filter>Source Files\draw\scripts\generation</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ScriptPathFinding.cpp">
+      <Filter>Source Files\draw\scripts\generation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -69,23 +75,26 @@
     <ClInclude Include="source\fuse\classes\maths\vector\type-vec4.h">
       <Filter>Source Files\fuse</Filter>
     </ClInclude>
-    <ClInclude Include="source\ConsoleCanvas.h">
-      <Filter>Source Files\draw\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="source\AngorithmAStar.h">
-      <Filter>Source Files\draw\algorithm</Filter>
-    </ClInclude>
     <ClInclude Include="source\main.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\ScriptNodeRemove.h">
+    <ClInclude Include="source\ConsoleCanvas.h">
+      <Filter>Source Files\draw\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Grid.h">
+      <Filter>Source Files\draw\scripts\generation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Node.h">
+      <Filter>Source Files\draw\scripts\generation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script.h">
       <Filter>Source Files\draw\scripts</Filter>
     </ClInclude>
-    <ClInclude Include="source\AINode.h">
-      <Filter>Source Files\draw\generation</Filter>
+    <ClInclude Include="source\ScriptUpdateRect.h">
+      <Filter>Source Files\draw\scripts</Filter>
     </ClInclude>
-    <ClInclude Include="source\AIGrid.h">
-      <Filter>Source Files\draw\generation</Filter>
+    <ClInclude Include="source\ScriptPathFinding.h">
+      <Filter>Source Files\draw\scripts\generation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

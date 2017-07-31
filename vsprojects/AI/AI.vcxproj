@@ -19,13 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\ScriptNodeRemover.cpp" />
     <ClCompile Include="source\ConsoleCanvas.cpp" />
+    <ClCompile Include="source\Grid.cpp" />
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\Node.cpp" />
+    <ClCompile Include="source\ScriptPathFinding.cpp" />
+    <ClCompile Include="source\ScriptUpdateRect.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\ScriptNodeRemove.h" />
-    <ClInclude Include="source\AngorithmAStar.h" />
+    <ClInclude Include="source\Script.h" />
     <ClInclude Include="source\ConsoleCanvas.h" />
     <ClInclude Include="source\fuse\classes.h" />
     <ClInclude Include="source\fuse\classes\include.h" />
@@ -39,8 +41,10 @@
     <ClInclude Include="source\fuse\classes\maths\vector\type-vec3.h" />
     <ClInclude Include="source\fuse\classes\maths\vector\type-vec4.h" />
     <ClInclude Include="source\main.h" />
-    <ClInclude Include="source\AINode.h" />
-    <ClInclude Include="source\AIGrid.h" />
+    <ClInclude Include="source\Node.h" />
+    <ClInclude Include="source\Grid.h" />
+    <ClInclude Include="source\ScriptPathFinding.h" />
+    <ClInclude Include="source\ScriptUpdateRect.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{498DD418-5F64-4242-83E6-0DE973E10BE8}</ProjectGuid>

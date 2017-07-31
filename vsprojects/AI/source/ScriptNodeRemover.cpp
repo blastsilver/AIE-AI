@@ -93,6 +93,14 @@
 		// check mouse state
 		if (m_mouseClick1)
 		{
+            ConsoleCanvas::Triangle triangle;
+            triangle.v1 = { -1, 0, 0, 0 };
+            triangle.v2 = { 1, 0.5, 0, 0 };
+            triangle.v3 = { 0, 1, 0, 0 };
+            triangle.c1 = { 1, 0, 0, 1 };
+            triangle.c2 = { 0, 1, 0, 1 };
+            triangle.c3 = { 0, 0, 1, 1 };
+            canvas->render(triangle);
 			// draw lines
 			m_line.v1.xy = m_pos1;
 			m_line.v2.xy = { m_pos2.x, m_pos1.y };

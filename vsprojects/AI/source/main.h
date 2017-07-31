@@ -3,17 +3,17 @@
 
 	// required libraries
 	#include <vector>
+    #include <ccon3.h>
 	#include <Windows.h>
 	// required headers
 	#include "fuse\classes.h"
-	// project headers
 	#include "ConsoleCanvas.h"
-	#include "AINode.h"
-	#include "AIGrid.h"
-	#include "AngorithmAStar.h"
-
-	// project scripts
-	#include "ScriptNodeRemove.h"
+	// project headers
+	#include "Node.h"
+	#include "Grid.h"
+    #include "Script.h"
+    #include "ScriptUpdateRect.h"
+    #include "ScriptPathFinding.h"
 
 /** Declarations **********************************************************************************/
 /**************************************************************************************************/
