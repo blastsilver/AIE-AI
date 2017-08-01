@@ -6,49 +6,23 @@
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Source Files\fuse">
-      <UniqueIdentifier>{4aa74518-e829-4321-b374-ee4c8caaadb5}</UniqueIdentifier>
+      <UniqueIdentifier>{7ad03cd5-507f-4587-a978-105d4b874988}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\files">
-      <UniqueIdentifier>{3d0fa6fc-9582-4386-885b-f20a94a9e793}</UniqueIdentifier>
+      <UniqueIdentifier>{2c2375ac-6bda-4ef8-9e7f-c95641e6b69b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\files\agent">
-      <UniqueIdentifier>{47601501-de00-4a68-aacd-f1e7abca68e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\files\generation">
-      <UniqueIdentifier>{ab51ae2f-ee34-4cbd-a204-621c9ec29054}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="source\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Grid.cpp">
-      <Filter>Source Files\files\generation</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Node.cpp">
-      <Filter>Source Files\files\generation</Filter>
-    </ClCompile>
-    <ClCompile Include="source\AgentFollow.cpp">
-      <Filter>Source Files\files\agent</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ConsoleCanvas.cpp">
-      <Filter>Source Files\fuse</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ScriptPathFinding.cpp">
-      <Filter>Source Files\files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ScriptUpdateRect.cpp">
-      <Filter>Source Files\files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\fuse\classes.h">
       <Filter>Source Files\fuse</Filter>
     </ClInclude>
-    <ClInclude Include="source\fuse\classes\include.h">
+    <ClInclude Include="source\ConsoleCanvas.h">
       <Filter>Source Files\fuse</Filter>
     </ClInclude>
     <ClInclude Include="source\fuse\classes\maths\include.h">
+      <Filter>Source Files\fuse</Filter>
+    </ClInclude>
+    <ClInclude Include="source\fuse\classes\include.h">
       <Filter>Source Files\fuse</Filter>
     </ClInclude>
     <ClInclude Include="source\fuse\classes\maths\detail\type-swizzle.h">
@@ -78,26 +52,25 @@
     <ClInclude Include="source\main.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Grid.h">
-      <Filter>Source Files\files\generation</Filter>
+    <ClInclude Include="source\FlockEntity.h">
+      <Filter>Source Files\files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Node.h">
-      <Filter>Source Files\files\generation</Filter>
+    <ClInclude Include="source\FlockManagerScript.h">
+      <Filter>Source Files\files</Filter>
     </ClInclude>
-    <ClInclude Include="source\AgentFollow.h">
-      <Filter>Source Files\files\agent</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ConsoleCanvas.h">
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\ConsoleCanvas.cpp">
       <Filter>Source Files\fuse</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Script.h">
+    </ClCompile>
+    <ClCompile Include="source\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FlockEntity.cpp">
       <Filter>Source Files\files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ScriptPathFinding.h">
+    </ClCompile>
+    <ClCompile Include="source\FlockManagerScript.cpp">
       <Filter>Source Files\files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ScriptUpdateRect.h">
-      <Filter>Source Files\files</Filter>
-    </ClInclude>
+    </ClCompile>
   </ItemGroup>
 </Project>
