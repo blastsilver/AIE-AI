@@ -15,6 +15,7 @@
         // protected variables
         bool m_kPress;
         bool m_pathFound;
+        AgentFollow nodeFollow;
         ConsoleCanvas::Line m_line;
         ConsoleCanvas::Text m_text;
         std::vector<AI::Node*> m_openList;

@@ -14,9 +14,9 @@
 	#include "Node.h"
 	#include "Grid.h"
     #include "Script.h"
+    #include "AgentFollow.h"
     #include "ScriptUpdateRect.h"
     #include "ScriptPathFinding.h"
-    #include "AgentFollow.h"
 
 /** Declarations **********************************************************************************/
 /**************************************************************************************************/

@@ -22,6 +22,9 @@
             }
         }
         else m_kPress = false;
+        
+        nodeFollow.SetState(m_pathFound);
+        nodeFollow.Update();
     }
 
     void ScriptPathFinding::Update(float x, float y)
@@ -38,6 +41,8 @@
             RENDER_NodeList(m_openList, canvas);
             LINE.c1 = { 1, 0, 0, 1 };
             RENDER_NodeList(m_closeList, canvas);
+
+            nodeFollow.Render(canvas);
         }
     }
 
@@ -84,6 +89,8 @@
                 // check if finished searching
 				if (currentNode == end)
 				{
+                    nodeFollow.position = end->position;
+                    nodeFollow.parent = end;
 					m_pathFound = true;
 					return;
 				}
