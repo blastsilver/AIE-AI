@@ -19,7 +19,7 @@
             // update values
             m_toggle = false;
             // update node grid
-            m_grid->UpdateArea({
+            m_grid->Update({
                 m_position1.x < m_position2.x ? m_position1.x : m_position2.x,
                 m_position1.y < m_position2.y ? m_position1.y : m_position2.y,
                 abs(m_position2.x - m_position1.x),

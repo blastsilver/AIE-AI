@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\AgentFollow.cpp" />
     <ClCompile Include="source\ConsoleCanvas.cpp" />
     <ClCompile Include="source\Grid.cpp" />
     <ClCompile Include="source\main.cpp" />
@@ -27,6 +28,7 @@
     <ClCompile Include="source\ScriptUpdateRect.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\AgentFollow.h" />
     <ClInclude Include="source\Script.h" />
     <ClInclude Include="source\ConsoleCanvas.h" />
     <ClInclude Include="source\fuse\classes.h" />

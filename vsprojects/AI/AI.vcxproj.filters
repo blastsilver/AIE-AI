@@ -20,6 +20,9 @@
     <Filter Include="Source Files\draw\scripts\generation">
       <UniqueIdentifier>{ab51ae2f-ee34-4cbd-a204-621c9ec29054}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\draw\scripts\agent">
+      <UniqueIdentifier>{47601501-de00-4a68-aacd-f1e7abca68e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -39,6 +42,9 @@
     </ClCompile>
     <ClCompile Include="source\ScriptPathFinding.cpp">
       <Filter>Source Files\draw\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="source\AgentFollow.cpp">
+      <Filter>Source Files\draw\scripts\agent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +101,9 @@
     </ClInclude>
     <ClInclude Include="source\ScriptPathFinding.h">
       <Filter>Source Files\draw\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AgentFollow.h">
+      <Filter>Source Files\draw\scripts\agent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

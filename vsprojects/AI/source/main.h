@@ -16,6 +16,7 @@
     #include "Script.h"
     #include "ScriptUpdateRect.h"
     #include "ScriptPathFinding.h"
+    #include "AgentFollow.h"
 
 /** Declarations **********************************************************************************/
 /**************************************************************************************************/

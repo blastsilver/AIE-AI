@@ -24,16 +24,6 @@ fuse::vec2<float> CalculateCursorPosition()
     };
 };
 
-fuse::vec4<float> rotateZ(const fuse::vec4<float> & point, float angle)
-{
-    return {
-        cos(angle) * point.x + sin(angle) * point.y,
-        -sin(angle) * point.x + cos(angle) * point.y,
-        point.z,
-        point.w,
-    };
-}
-
 #define APP_WIDTH 81
 #define APP_HEIGHT 81
 
@@ -42,7 +32,7 @@ void main()
 	float passedTime = 0;
     fuse::vec2<float> point;
     
-    AI::Grid node_grid{ { 10, 10 } };
+    AI::Grid node_grid{ { 20, 20 } };
     ConsoleCanvas canvas{ APP_WIDTH, APP_HEIGHT };
     ScriptUpdateRect script1{ &node_grid };
     ScriptPathFinding script2{ &node_grid };
@@ -55,7 +45,6 @@ void main()
         {
             // [GRAPHICS] clear
             canvas.clear();
-
             // [PROJECT] update
             script1.Update();
             script2.Update();
@@ -68,8 +57,7 @@ void main()
             // [GRAPHICS] render
 			passedTime += 0.01f;
             canvas.render();
-			Sleep(10);
+			Sleep(0);
         }
-
     }
 }

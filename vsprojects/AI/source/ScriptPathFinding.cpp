@@ -2,7 +2,6 @@
 /** Dependencies **********************************************************************************/
 
     #include "main.h"
-    //https://youtu.be/mZfyt03LDH4?t=1047
 
 /** Declarations **********************************************************************************/
 
@@ -10,41 +9,36 @@
     {
         // reset all
         ResetCurrentPath();
-
-		FindPath({ -1,  1 }, { 1, -1 });
     };
 
     void ScriptPathFinding::Update()
     {
-
+        if (KeyPress(VK_RETURN))
+        {
+            if (!m_kPress)
+            {
+                m_kPress = true;
+                FindPath({ -1, -1 }, { 1, 1 });
+            }
+        }
+        else m_kPress = false;
     }
 
     void ScriptPathFinding::Update(float x, float y)
     {
-
     }
 
     void ScriptPathFinding::Render(ConsoleCanvas * canvas)
     {
-		ConsoleCanvas::Line line;
-		ConsoleCanvas::Text text;
-		line.c1 = { 0, 1, 0, 1 };
-		line.c2 = { 0, 0, 1, 1 };
-		for (auto * i : m_closeList)
-		{
-			if (i->parent != nullptr)
-			{
-				std::string str = std::to_string(i->fCost());
-
-				line.v1.xy = i->position + fuse::vec2<float>{ i->scale.x / 2, i->scale.y / 2 };
-				line.v2.xy = i->parent->position.xy + fuse::vec2<float>{ i->scale.x / 2, i->scale.y / 2 };
-				canvas->render(line);
-				text.v1.xy = i->position + fuse::vec2<float>{ i->scale.x / 2, i->scale.y / 3 };
-				text.c1 = { 1, 0, 0, 1 };
-				text.cstring = (char*)(str.c_str());
-				canvas->render(text);
-			}
-		}
+        if (m_pathFound)
+        {
+		    LINE.c1 = { 0, 1, 0, 1 };
+            LINE.c2 = { 0, 0, 1, 1 };
+            TEXT.c1 = { 1, 0, 0, 1 };
+            RENDER_NodeList(m_openList, canvas);
+            LINE.c1 = { 1, 0, 0, 1 };
+            RENDER_NodeList(m_closeList, canvas);
+        }
     }
 
     int ScriptPathFinding::GetPathDistance(const AI::Node * a, const AI::Node * b)
@@ -53,8 +47,8 @@
 		float dstY = abs(a->position.y - b->position.y);
 
 		if (dstX > dstY)
-			return 14 * dstY + 10 * (dstX - dstY);
-		return 14 * dstX + 10 * (dstY - dstX);
+			return int(14 * dstY + 10 * (dstX - dstY));
+		return int(14 * dstX + 10 * (dstY - dstX));
     }
 
     void ScriptPathFinding::FindPath(const fuse::vec2<float> & v1, const fuse::vec2<float> & v2)
@@ -62,8 +56,8 @@
         // reset all
         ResetCurrentPath();
         // fetch points
-        AI::Node * end = m_grid->FetchNode(v1);
-        AI::Node * start = m_grid->FetchNode(v2);
+        AI::Node * end = m_grid->SearchNode(v1);
+        AI::Node * start = m_grid->SearchNode(v2);
         // check if found
         if (start != 0 && end != 0)
         {
@@ -94,7 +88,7 @@
 					return;
 				}
                 // iterate through current neighbours
-                for (auto * i : m_grid->FetchNeighbours(currentNode))
+                for (auto * i : m_grid->SearchNeighbours(currentNode))
                 {
                     // check if valid
                     if (!i->isWalkable || std::find(m_closeList.begin(), m_closeList.end(), i) != m_closeList.end())
@@ -125,6 +119,25 @@
         m_openList.clear();
         m_closeList.clear();
         m_pathFound = false;
+    }
+
+    void ScriptPathFinding::RENDER_NodeList(const std::vector<AI::Node*> & data, ConsoleCanvas * canvas)
+    {
+        for (auto * i : data)
+        {
+            if (i->parent != nullptr)
+            {
+                std::string str = std::to_string(i->fCost());
+                // render line
+                LINE.v1.xy = i->position + fuse::vec2<float>{ i->scale.x / 2, i->scale.y / 2 };
+                LINE.v2.xy = i->parent->position.xy + fuse::vec2<float>{ i->scale.x / 2, i->scale.y / 2 };
+                canvas->render(LINE);
+                // render text
+                TEXT.v1.xy = i->position + fuse::vec2<float>{ i->scale.x / 2, i->scale.y / 3 };
+                TEXT.cstring = (char*)(str.c_str());
+                canvas->render(TEXT);
+            }
+        }
     }
 
 /**************************************************************************************************/
