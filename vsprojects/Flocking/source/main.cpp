@@ -43,7 +43,7 @@
 	{
         // [flocking] variables
 		srand((unsigned int)time(time_t(0)));
-		const int flockSize = 150;
+		const int flockSize = 500;
 		fuse::vec2<float> pt = CalculateCursorPosition();
 		std::vector<FlockEntity> flockGroup;
         // [flocking] creation
@@ -56,7 +56,7 @@
             flockGroup[i].position.y = (float(rand() % 200) - 100.0f) / 200.0f;
             flockGroup[i].cohesionWeight = 0.01f;
             flockGroup[i].alignmentWeight = 0.2f;
-            flockGroup[i].separationWeight = 2.0f;
+            flockGroup[i].separationWeight = 1.0f;
         }
         // [bonus star] variables
         float timer = 0;
