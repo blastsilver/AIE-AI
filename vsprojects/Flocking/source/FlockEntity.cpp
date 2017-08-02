@@ -8,7 +8,6 @@
 	FlockEntity::FlockEntity()
 	{
 		// initialize values
-		this->scale = 1;
 		this->speed = 1;
 		this->range = 5;
 		this->position = { 0, 0 };
@@ -21,15 +20,15 @@
 	void FlockEntity::Update()
 	{
 		// update position
-		position.x += direction.x * speed * scale;
-		position.y += direction.y * speed * scale;
+		position.x += direction.x * speed;
+		position.y += direction.y * speed;
 	};
 
 	void FlockEntity::Update(float x, float y)
 	{
 		// update direction
 		fuse::vec2<float> n = { x, y };
-		NORMALIZE(n);
+		//NORMALIZE(n);
 		direction.x += n.x;
 		direction.y += n.y;
 		NORMALIZE(direction);
@@ -37,19 +36,11 @@
 
 	void FlockEntity::Render(ConsoleCanvas * canvas)
 	{
-		// update triangle
-		TRIANGLE.v1.xyz = { position.x - (scale / 2.0f), position.y + (scale / 2.0f), 0 };
-		TRIANGLE.v2.xyz = { TRIANGLE.v1.x + scale, TRIANGLE.v1.y, 1 };
-		TRIANGLE.v3.xyz = { position.x, TRIANGLE.v1.y - scale, 0 };
-		TRIANGLE.c1 = { 1, 0, 0, 1 };
-		TRIANGLE.c2 = { 0, 1, 0, 1 };
-		TRIANGLE.c3 = { 0, 0, 1, 1 };
-		// update transform
-		//ROTATE(TRIANGLE.v1, rotation);
-		//ROTATE(TRIANGLE.v2, rotation);
-		//ROTATE(TRIANGLE.v3, rotation);
-		// render the triangle
-		canvas->render(TRIANGLE);
+        // update dot
+        DOT.v1.xy = position;		
+        DOT.c1 = { 1, 1, 1, 1 };
+		// render the dot
+		canvas->render(DOT);
 	};
 
 	void FlockEntity::Update(std::vector<FlockEntity> & agents)
@@ -62,14 +53,31 @@
 		direction.y += alignment.y * alignmentWeight + cohesion.y * cohesionWeight + separation.y * separationWeight;
 
 		NORMALIZE(direction);
+
+        // update direction
+        if (LENGTH(position + fuse::vec2<float>{ direction.x * speed, direction.y * speed }) > 1.0f)
+        {
+            direction.x = -direction.x;
+            direction.y = -direction.y;
+        }
+        //if ((position.x + (direction.x * speed)) < -0.8f || (position.x + (direction.x * speed)) > 0.8f) direction.x = -direction.x;
+        //else if ((position.y + (direction.y * speed)) < -0.8f || (position.y + (direction.y * speed)) > 0.8f) direction.y = -direction.y;
 	};
 	
 	void FlockEntity::NORMALIZE(fuse::vec2<float> & a)
 	{
 		// normalize vector
 		const float length = LENGTH(a);
-		a.x /= length;
-		a.y /= length;
+        if (length != 0.0f)
+        {
+		    a.x /= length;
+		    a.y /= length;
+        }
+        else
+        {
+            a.x = 0;
+            a.y = 0;
+        }
 	}
 
 	void FlockEntity::ROTATE(fuse::vec4<float> & vector, const float angle)
@@ -83,8 +91,9 @@
 
 	float FlockEntity::LENGTH(fuse::vec2<float> & a)
 	{
+        const float dot = PRODUCT_DOT(a, a);
 		// calculate vector lenght
-		return sqrtf(PRODUCT_DOT(a, a));
+		return dot == 0.0f ? 0.0f : sqrtf(dot);
 	};
 
 	float FlockEntity::PRODUCT_DOT(fuse::vec2<float> & a, fuse::vec2<float> & b)
@@ -172,8 +181,8 @@
 				if (LENGTH(dir) < range)
 				{
 					count++;
-					point.x += agent.direction.x - position.x;
-					point.y += agent.direction.y - position.y;
+					point.x += agent.position.x - position.x;
+					point.y += agent.position.y - position.y;
 				}
 			}
 		}

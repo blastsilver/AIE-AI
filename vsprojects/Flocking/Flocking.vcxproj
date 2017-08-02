@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClInclude Include="source\ConsoleCanvas.h" />
     <ClInclude Include="source\FlockEntity.h" />
-    <ClInclude Include="source\FlockManagerScript.h" />
     <ClInclude Include="source\fuse\classes.h" />
     <ClInclude Include="source\fuse\classes\include.h" />
     <ClInclude Include="source\fuse\classes\maths\detail\type-swizzle-0.h" />
@@ -39,7 +38,6 @@
     <ClCompile Include="source\ConsoleCanvas.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\FlockEntity.cpp" />
-    <ClCompile Include="source\FlockManagerScript.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{84C2D9D2-0991-4FE5-B723-04E3C4740E0B}</ProjectGuid>

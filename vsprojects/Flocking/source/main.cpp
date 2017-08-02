@@ -27,57 +27,88 @@
 		};
 	};
 
+    fuse::vec3<float> RotatePoint(const fuse::vec3<float> & vector, const float angle)
+    {
+        // calculate new vector
+        return {
+            vector.x * cos(angle) + vector.y * -sin(angle),
+            vector.x * sin(angle) + vector.y * cos(angle),
+            vector.z,
+        };
+    };
+
 /** Declarations **********************************************************************************/
 
 	void main()
 	{
-		srand(time(0));
-		const int size = 100;
-		const float angle = float(2.0f * MATHF_PI) / float(size);
+        // [flocking] variables
+		srand((unsigned int)time(time_t(0)));
+		const int flockSize = 150;
 		fuse::vec2<float> pt = CalculateCursorPosition();
-
+		std::vector<FlockEntity> flockGroup;
+        // [flocking] creation
+        for (size_t i = 0; i < flockSize; i++)
+        {
+            flockGroup.push_back(FlockEntity{});
+            flockGroup[i].range = 0.07f;
+            flockGroup[i].speed = 0.02f;
+            flockGroup[i].position.x = (float(rand() % 200) - 100.0f) / 200.0f;
+            flockGroup[i].position.y = (float(rand() % 200) - 100.0f) / 200.0f;
+            flockGroup[i].cohesionWeight = 0.01f;
+            flockGroup[i].alignmentWeight = 0.2f;
+            flockGroup[i].separationWeight = 2.0f;
+        }
+        // [bonus star] variables
+        float timer = 0;
+        const int starSize = 5;
+		const float starAngle = float(2.0f * MATHF_PI) / float(starSize);
+        ConsoleCanvas::Triangle starTriangle;
+        starTriangle.c1 = { 1, 0, 0, 1.0f };
+        starTriangle.c2 = { 0, 0, 1, 1.0f };
+        starTriangle.c3 = { 0, 1, 0, 1.0f }; 
+        // console canvas renderer
 		ConsoleCanvas canvas{ 81, 81 };
-		std::vector<FlockEntity> entities;
-
-		for (unsigned int i = 0; i < size; i++)
-		{
-			entities.push_back(FlockEntity{});
-			entities[i].range = 3;
-			entities[i].scale = 0.001f;
-			entities[i].speed = 5.050f;
-			entities[i].position.x = (float(rand() % 200) - 100.0f) / 200.0f;
-			entities[i].position.y = (float(rand() % 200) - 100.0f) / 200.0f;
-			entities[i].cohesionWeight = 1.0f;
-			entities[i].alignmentWeight = 1.0f;
-			entities[i].separationWeight = 2.0f;
-		}
+        // while running
 		while (true)
 		{
+            // clear console
 			canvas.clear();
+            // [bonus star] update & render
+            for (int i = 0; i < starSize; i++)
+            {
+                // render star shape
+                starTriangle.v1.xyz = RotatePoint({ -0.5f, 0.0f, 1.00f }, starAngle * float(i) + timer);
+                starTriangle.v2.xyz = RotatePoint({  0.0f, 1.0f, 2.00f }, starAngle * float(i) + timer);
+                starTriangle.v3.xyz = RotatePoint({  0.5f, 0.0f, 2.00f }, starAngle * float(i) + timer);
+                canvas.render(starTriangle);
+            }
+            timer += 0.1f;
 
+            // [flocking] update & render
 			pt = CalculateCursorPosition();
-			if (ValidateCursorPosition(pt))
+			for (auto & i : flockGroup)
 			{
-				for (auto & i : entities)
-				{
-					fuse::vec2<float> dir = pt - i.position;
-					i.Update(dir.x, dir.y);
-				}
-			}
-
-			for (auto & i : entities)
-			{
-				i.Update(entities);
+                // move to cursor
+                if (ValidateCursorPosition(pt))
+                {
+                    fuse::vec2<float> dir = pt - i.position;
+                    i.Update(dir.x, dir.y);
+                }
+                // update flocking ai
+				i.Update(flockGroup);
 				i.Update();
 				i.Render(&canvas);
 			}
 
+            // draw cursor
 			ConsoleCanvas::Dot dot;
 			dot.v1.xy = pt;
 			dot.c1 = { 1, 0, 0, 1 };
 			canvas.render(dot);
 
+            // render console
 			canvas.render();
+            Sleep(20);
 		}
 	}
 

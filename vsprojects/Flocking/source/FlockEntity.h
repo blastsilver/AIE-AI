@@ -14,7 +14,6 @@
 		void Update(std::vector<FlockEntity> & agents);
 		// public variables
 		float speed;
-		float scale;
 		float range;
 		float cohesionWeight;
 		float alignmentWeight;
