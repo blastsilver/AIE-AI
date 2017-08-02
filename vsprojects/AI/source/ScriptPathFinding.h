@@ -11,6 +11,7 @@
         virtual void Update();
         virtual void Update(float x, float y);
         virtual void Render(ConsoleCanvas * canvas);
+        ConsoleCanvas * m_canvas;
     protected:
         // protected variables
         bool m_kPress;

@@ -37,6 +37,8 @@ void main()
     ScriptUpdateRect script1{ &node_grid };
     ScriptPathFinding script2{ &node_grid };
 
+    script2.m_canvas = &canvas;
+
     while (true)
     {
         // [PROJECT] Validate cursor position
