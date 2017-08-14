@@ -46,14 +46,31 @@
         }
     }
 
-    int ScriptPathFinding::GetPathDistance(const AI::Node * a, const AI::Node * b)
+    float ScriptPathFinding::GetPathDistance(const AI::Node * a, const AI::Node * b)
     {
-		int dstX = int((abs(a->position.x - b->position.x) + 1) / a->scale.x);
-		int dstY = int((abs(a->position.y - b->position.y) + 1) / a->scale.y);
 
+        float dstX = abs(a->position.x - b->position.x);
+        float dstY = abs(a->position.y - b->position.y);
+
+        if (dstX > dstY)
+        {
+            return (1.414213 * dstY) + (dstX - dstY);
+        }
+        else
+        {
+            return (1.414213 * dstX) + (dstY - dstX);
+        }
+        /*return (float)H;
+        return sqrtf(dstX * dstX + dstY * dstY);*/
+
+
+		/*int dstX = int((abs(a->position.x - b->position.x) + 1) / a->scale.x);
+		int dstY = int((abs(a->position.y - b->position.y) + 1) / a->scale.y);
+        
+        return dstX + dstY;
 		if (dstX > dstY)
 			return int(14 * dstY + 10 * (dstX - dstY));
-		return int(14 * dstX + 10 * (dstY - dstX));
+		return int(14 * dstX + 10 * (dstY - dstX));*/
     }
 
     void ScriptPathFinding::FindPath(const fuse::vec2<float> & v1, const fuse::vec2<float> & v2)
@@ -76,10 +93,18 @@
                 for (auto * i : m_openList)
                 {
                     // find cheapest node
-                    if (currentNode == nullptr || i->fCost() <= currentNode->fCost() && i->hCost() < currentNode->hCost())
+                    //if (currentNode == nullptr || i->fCost() <= currentNode->fCost() && i->hCost() < currentNode->hCost())
+                    if (currentNode == nullptr || i->fCost() < currentNode->fCost())
                     {
                         // update current node
                         currentNode = i;
+                    }
+                    else if (i->fCost() == currentNode->fCost())
+                    {
+                        if (i->hCost() < currentNode->hCost())
+                        {
+                            currentNode = i;
+                        }
                     }
                 }
                 // swap values between lists
@@ -102,7 +127,7 @@
                         continue;
                     }
 
-					int costToNeighbour = currentNode->gCost() + GetPathDistance(currentNode, neighbour);
+					float costToNeighbour = currentNode->gCost() + GetPathDistance(currentNode, neighbour);
 					if (costToNeighbour < neighbour->gCost() || std::find(m_openList.begin(), m_openList.end(), neighbour) == m_openList.end())
 					{
 						neighbour->gCost(costToNeighbour);

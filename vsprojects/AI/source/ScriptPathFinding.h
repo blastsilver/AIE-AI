@@ -22,7 +22,7 @@
         std::vector<AI::Node*> m_openList;
         std::vector<AI::Node*> m_closeList;
         // protected functions
-        int GetPathDistance(const AI::Node * a, const AI::Node * b);
+        float GetPathDistance(const AI::Node * a, const AI::Node * b);
         void FindPath(const fuse::vec2<float> & v1, const fuse::vec2<float> & v2);
         void ResetCurrentPath();
         void RENDER_NodeList(const std::vector<AI::Node*> & data, ConsoleCanvas * canvas);

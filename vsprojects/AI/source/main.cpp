@@ -32,7 +32,7 @@ void main()
 	float passedTime = 0;
     fuse::vec2<float> point;
     
-    AI::Grid node_grid{ { 20, 20 } };
+    AI::Grid node_grid{ { 10, 10 } };
     ConsoleCanvas canvas{ APP_WIDTH, APP_HEIGHT };
     ScriptUpdateRect script1{ &node_grid };
     ScriptPathFinding script2{ &node_grid };
